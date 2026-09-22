@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Builder script for REV 2026.3 of 《極致純素烤肉全書：食材圖鑑、無五辛特調醬與科學燒烤指南》
+Builder script for REV 2026.3 of 《極致素烤全書：食材圖鑑、無五辛特調醬與科學燒烤指南》
 Full expansion: 35 checklist items, 9 sauces, 5 skewer matrix + dessert zone, expanded ingredient categories.
 """
 
@@ -11,7 +11,7 @@ html_content = '''<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>極致純素烤肉全書：食材圖鑑、無五辛特調醬與科學燒烤指南</title>
+  <title>極致素烤全書：食材圖鑑、無五辛特調醬與科學燒烤指南</title>
   
   <!-- Google Fonts: Noto Sans TC, Noto Serif TC, Playfair Display, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -489,7 +489,7 @@ html_content = '''<!DOCTYPE html>
     .tag-dessert { background: #f5edf7; color: #783587; }
 
     /* ==========================================================================
-       6. 模組 1：烤肉食材分類圖鑑與熱力學處理法
+       6. 模組 1：素烤食材分類圖鑑與熱力學處理法
        ========================================================================== */
     .module-section {
       padding: 56px 0;
@@ -652,7 +652,7 @@ html_content = '''<!DOCTYPE html>
     }
 
     /* ==========================================================================
-       7. 模組 2：九大無五辛純素特調烤肉醬
+       7. 模組 2：九大無五辛純素特調素烤醬
        ========================================================================== */
     .sauce-grid {
       display: grid;
@@ -1252,7 +1252,7 @@ html_content = '''<!DOCTYPE html>
       </div>
 
       <h1 class="hero-title">
-        極致純素烤肉全書<br>
+        極致素烤全書<br>
         <span>食材圖鑑、無五辛特調醬與科學燒烤指南</span>
       </h1>
       
@@ -1303,14 +1303,14 @@ html_content = '''<!DOCTYPE html>
   <main class="container">
 
     <!-- ==========================================================================
-         工具模組：烤肉必備食材互動備料清單（Checklist Tool - 35項權威旗艦版）
+         工具模組：素烤必備食材互動備料清單（Checklist Tool - 35項權威旗艦版）
          ========================================================================== -->
     <section id="prep-checklist" style="scroll-margin-top: 70px;">
       <div class="checklist-card">
         <div class="checklist-header">
           <div class="checklist-title">
             <i class="fa-solid fa-clipboard-list" style="color: var(--caramel-wood);"></i>
-            <h3>烤肉必備食材與特調配方互動備料清單（全 35 項）</h3>
+            <h3>素烤必備食材與特調配方互動備料清單（全 35 項）</h3>
           </div>
           <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
             <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-forest);">
@@ -1347,12 +1347,12 @@ html_content = '''<!DOCTYPE html>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">傳統古法麵腸 (斜切拉花切口)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素牛蒡甜不辣 (劃淺紋增加吸醬)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素黑輪片 (斜角切塊增面積)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">特級植物肉丸 (預冷定型防散架)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">特級純素植物蛋白丸 (預冷定型防散架)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">手工腐皮蘆筍捲 (腐皮緊密捲包)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
 
           <!-- 高鮮蕈菇類 5 項 -->
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">特級杏鮑菇 (厚切1.5cm滾刀塊)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">生鮮厚肉香菇 (去蒂蕈傘十字劃痕)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">生鮮肥厚香菇 (去蒂蕈傘十字劃痕)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">原木波特菇 (去粗柄保留完整蕈杯)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">鮮採生猴頭菇 (手撕塊汆燙去苦)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">薑絲金針菇鋁箔盒 (包覆黑胡椒昆布露)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
@@ -1375,12 +1375,12 @@ html_content = '''<!DOCTYPE html>
     </section>
 
     <!-- ==========================================================================
-       模組 1：烤肉食材分類圖鑑與熱力學處理法
+       模組 1：素烤食材分類圖鑑與熱力學處理法
        ========================================================================== -->
     <section id="module-ingredients" class="module-section" style="scroll-margin-top: 60px;">
       <div class="section-title-wrap">
         <span class="section-subtitle">MODULE 01 / THERMODYNAMICS & INGREDIENT ENCYCLOPEDIA</span>
-        <h2 class="section-title">烤肉食材分類圖鑑與熱力學處理法</h2>
+        <h2 class="section-title">素烤食材分類圖鑑與熱力學處理法</h2>
         <p class="section-desc">
           蔬食組織缺乏動物性飽和脂肪網。必須藉由「厚度控制、表面油脂阻水膜、植物體自體水蒸氣腔」三位一體熱力學控制，
           結合支鏈澱粉受熱回軟曲線與長鏈菌絲鎖水機制，方能達成多汁且焦香之巔峰境界。
@@ -1611,9 +1611,9 @@ html_content = '''<!DOCTYPE html>
             <div class="ingredient-header">
               <div>
                 <span class="badge badge-forest"><i class="fa-solid fa-cloud"></i> 長鏈菌絲鎖水</span>
-                <h3 class="ingredient-name" style="margin-top:6px;">厚肉鮮採生猴頭菇</h3>
+                <h3 class="ingredient-name" style="margin-top:6px;">肥厚鮮採生猴頭菇</h3>
               </div>
-              <span class="badge badge-dark">極致仿肉纖維感</span>
+              <span class="badge badge-dark">極致絲縷纖維感</span>
             </div>
             <div class="ingredient-specs">
               <div class="spec-item"><span class="spec-label">前處理SOP</span><span class="spec-val">撕大塊入 95°C 鹽水汆燙擠乾苦水</span></div>
@@ -1621,7 +1621,7 @@ html_content = '''<!DOCTYPE html>
               <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中大火區 (170-190°C) 烙烤焦香</span></div>
             </div>
             <p class="ingredient-physics">
-              <strong>熱力學原理解析：</strong>猴頭菇（Hericium erinaceus）具有如肉絲般排列的長鏈多孔菌絲網絡。天然含有微量苦味素，經 95°C 汆燙能破坏苦味胜肽並排除氣阻；趁熱浸泡醃汁後，菌絲毛細管緊緊鎖住水分，在 180°C 烤架上蛋白質梅納反應散發出驚人的烤牛排般濃郁纖維肉感。
+              <strong>熱力學原理解析：</strong>猴頭菇（Hericium erinaceus）具有如絲縷般排列的長鏈多孔菌絲網絡。天然含有微量苦味素，經 95°C 汆燙能破坏苦味胜肽並排除氣阻；趁熱浸泡醃汁後，菌絲毛細管緊緊鎖住水分，在 180°C 烤架上蛋白質梅納反應散發出驚人的濃郁厚實的絲縷質地與鮮味。
             </p>
             <div class="ingredient-pitfall">
               <i class="fa-solid fa-triangle-exclamation"></i> <strong>生烤大忌：</strong>生猴頭菇絕對不可未經汆燙直接上架烤！苦味素未被洗去且菇體乾燥吸油，會變得苦澀難嚥。
@@ -1646,7 +1646,7 @@ html_content = '''<!DOCTYPE html>
               <div class="spec-item"><span class="spec-label">梅納黃金溫區</span><span class="spec-val">140°C - 165°C</span></div>
             </div>
             <p class="ingredient-physics">
-              <strong>熱力學原理解析：</strong>豆干外皮緻密的大豆蛋白網阻礙醬汁滲入，2mm 菱格劃刀將表面積擴增 40% 以上，並切斷硬化膠原網；火候控制在 140-165°C 區間，還原糖與大豆氨基酸引發梅納反應，生成大量含氮雜環焦香化合物，肉感十足。
+              <strong>熱力學原理解析：</strong>豆干外皮緻密的大豆蛋白網阻礙醬汁滲入，2mm 菱格劃刀將表面積擴增 40% 以上，並切斷硬化膠原網；火候控制在 140-165°C 區間，還原糖與大豆氨基酸引發梅納反應，生成大量含氮雜環焦香化合物，嚼勁十足。
             </p>
             <div class="ingredient-pitfall">
               <i class="fa-solid fa-triangle-exclamation"></i> <strong>火候警告：</strong>超過 180°C 刷醬會導致表面糖分急速焦碳化發苦，蛋白質內部卻依然冰冷未透。
@@ -1729,14 +1729,14 @@ html_content = '''<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- 卡片 14：杏鮑菇與厚肉生香菇 -->
+        <!-- 卡片 14：杏鮑菇與肥厚生香菇 -->
         <div class="ingredient-card" data-cat="mushroom">
           <div class="card-top-bar mushroom"></div>
           <div class="ingredient-content">
             <div class="ingredient-header">
               <div>
                 <span class="badge badge-forest"><i class="fa-solid fa-shield"></i> 幾丁質骨架</span>
-                <h3 class="ingredient-name" style="margin-top:6px;">杏鮑菇 & 厚肉生香菇</h3>
+                <h3 class="ingredient-name" style="margin-top:6px;">杏鮑菇 & 肥厚生香菇</h3>
               </div>
               <span class="badge badge-dark">天然游離鮮味</span>
             </div>
@@ -1771,7 +1771,7 @@ html_content = '''<!DOCTYPE html>
               <div class="spec-item"><span class="spec-label">出汁標誌</span><span class="spec-val">蕈杯中蓄滿金褐天然菇湯沸騰</span></div>
             </div>
             <p class="ingredient-physics">
-              <strong>熱力學原理解析：</strong>波特菇肉厚多汁，其菌褶富含鳥苷酸。平置中火區烘烤時，熱量由厚實蕈背均勻向上傳導，菇體水分溶解高濃度鮮味胺基酸，於天然凹槽內濃縮成極鮮清湯，質地肥厚宛若頂級牛排。
+              <strong>熱力學原理解析：</strong>波特菇厚實多汁，其菌褶富含鳥苷酸。平置中火區烘烤時，熱量由厚實蕈背均勻向上傳導，菇體水分溶解高濃度鮮味胺基酸，於天然凹槽內濃縮成極鮮清湯，質地肥厚多汁、鮮甜濃郁。
             </p>
             <div class="ingredient-pitfall">
               <i class="fa-solid fa-triangle-exclamation"></i> <strong>切勿手癢：</strong>烘烤全程切勿用夾子下壓或翻轉，否則辛辛苦苦濃縮凝聚的頂級原湯將全數付之一炬。
@@ -1842,7 +1842,7 @@ html_content = '''<!DOCTYPE html>
         </div>
 
         <p style="margin-top: 14px; font-size: 0.96rem; color: #2e4537; line-height: 1.8;">
-          多數人視青花菜為「烤肉黑名單」，因其球狀花蕾極易燃燒焦黑，而粗壯花莖卻堅硬如生。
+          多數人視青花菜為「素烤黑名單」，因其球狀花蕾極易燃燒焦黑，而粗壯花莖卻堅硬如生。
           然而，一旦運用熱力學幾何解構與化學防護，青花菜能產出如堅果般迷人甜脆焦香（Charred Broccoli），成為全場最驚豔之明星食材！
         </p>
 
@@ -1880,12 +1880,12 @@ html_content = '''<!DOCTYPE html>
     </section>
 
     <!-- ==========================================================================
-         模組 2：九大無五辛純素特調烤肉醬（新增文旦鮮柚甘露醬）
+         模組 2：九大無五辛純素特調素烤醬（新增文旦鮮柚甘露醬）
          ========================================================================== -->
     <section id="module-sauces" class="module-section" style="scroll-margin-top: 60px;">
       <div class="section-title-wrap">
         <span class="section-subtitle">MODULE 02 / EXQUISITE ALLIUM-FREE CRAFT SAUCES</span>
-        <h2 class="section-title">九大無五辛純素特調烤肉醬</h2>
+        <h2 class="section-title">九大無五辛純素特調素烤醬</h2>
         <p class="section-desc">
           完全剔除蔥、蒜、韭、薤、洋蔥等五辛分子。以昆布游離麩胺酸、日式赤白味噌胜肽類黑素、
           中秋當季文旦柚檸檬烯精油、天然紫菜多醣、香茅醛與天然水梨果糖，構築層次深邃宏大的無五辛呈味結構。
@@ -1969,7 +1969,7 @@ html_content = '''<!DOCTYPE html>
               <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
               <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
                 雙倍濃縮純番茄糊富含天然檸檬酸與蘋果酸，能中和大豆製品油膩感；
-                精選西班牙橡木冷煙燻製之煙燻紅椒粉釋放癒創木酚（Guaiacol）與丁香酚香氣，模擬傳統原木柴燻肉香；黑糖蜜在高溫下產生活潑熱降解焦糖香。
+                精選西班牙橡木冷煙燻製之煙燻紅椒粉釋放癒創木酚（Guaiacol）與丁香酚香氣，模擬傳統原木柴燻焦香；黑糖蜜在高溫下產生活潑熱降解焦糖香。
               </p>
             </div>
 
@@ -2183,7 +2183,7 @@ html_content = '''<!DOCTYPE html>
               <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
               <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
                 精選特級紫菜鮮味多醣與慢火烘焙之乾燥香菇柄細微纖維，構建出深具顆粒感的濃郁底韻；
-                結合天然糯米調和之黑豆蔭油膏，提供高溫耐受性極強的黏性護膜；純素烏醋的天然果酸與熟白芝麻粉在高溫炭火熱力激發下，爆發出濃郁撲鼻的經典台式夜市烤肉香。
+                結合天然糯米調和之黑豆蔭油膏，提供高溫耐受性極強的黏性護膜；純素烏醋的天然果酸與熟白芝麻粉在高溫炭火熱力激發下，爆發出濃郁撲鼻的經典台式炭火素烤香。
               </p>
             </div>
 
@@ -2342,7 +2342,7 @@ html_content = '''<!DOCTYPE html>
               <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
               <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
                 依據<strong>「優活健康網」</strong>低鈉高抗氧化中秋健康指引研製。新鮮文旦柚果肉富含天然水溶性果膠（Pectin）與維生素C，
-                柚皮揮發微滴釋放<strong>檸檬烯（D-Limonene）</strong>清香分子；與冷萃昆布水游離麩胺酸相溶，無須任何增稠劑即能形成自然掛壁之透亮甘露薄膜，鈉含量僅為傳統烤肉醬的 30%。
+                柚皮揮發微滴釋放<strong>檸檬烯（D-Limonene）</strong>清香分子；與冷萃昆布水游離麩胺酸相溶，無須任何增稠劑即能形成自然掛壁之透亮甘露薄膜，鈉含量僅為傳統市售烤醬的 30%。
               </p>
             </div>
 
@@ -2468,7 +2468,7 @@ html_content = '''<!DOCTYPE html>
             <span class="badge badge-gold">厚重草本醬香</span>
           </div>
           <p style="font-size: 0.88rem; color: var(--charcoal-sub); margin-bottom: 12px;">
-            專攻厚度超過 2.5cm 之五香大豆干。甘草甜素與八角茴香腦（Anethole）能與大豆蛋白緊密螯合，烤後肉感十足。
+            專攻厚度超過 2.5cm 之五香大豆干。甘草甜素與八角茴香腦（Anethole）能與大豆蛋白緊密螯合，烤後香氣濃郁、嚼勁十足。
           </p>
           <table class="recipe-table">
             <thead>
@@ -2683,7 +2683,7 @@ html_content = '''<!DOCTYPE html>
         </div>
 
         <p style="margin-top: 14px; font-size: 0.96rem; color: var(--charcoal-sub); line-height: 1.8;">
-          烤肉盛宴的最高潮，在於炭火漸熄、木炭表面覆蓋銀白薄灰時的「微溫餘熱」。
+          素烤盛宴的最高潮，在於炭火漸熄、木炭表面覆蓋銀白薄灰時的「微溫餘熱」。
           利用此溫區柔和均勻的遠紅外線熱輻射，慢烤純素麻糬、巧克力香蕉與海藻膠棉花糖，為味蕾畫下最溫暖療癒的句點。
         </p>
 
@@ -2787,7 +2787,7 @@ html_content = '''<!DOCTYPE html>
           <h4><i class="fa-solid fa-wand-magic-sparkles"></i> 竹籤防碳化斷裂：物理加壓飽和水工法</h4>
           <p style="font-size: 0.92rem; color: var(--charcoal-sub); line-height: 1.7;">
             <strong>失敗痛點：</strong>翻面時竹籤瞬間燒斷，食材散落炭灰中全毀。<br>
-            <strong>科學 SOP：</strong>竹籤（天然毛竹）木質纖維充滿細微空氣毛細管。烤肉前放入<strong>飽和溫鹽水（水溫約 50°C，鹽度 3%）</strong>浸泡至少 <strong>30-40 分鐘</strong>。溫水加速分子擴散排擠空氣，鹽分提高纖維燃點；串好食材後，<strong>露在烤架外的竹籤手握端以一小條鋁箔紙緊密捏緊包覆</strong>，形成絕熱盾牌，任憑大火狂吹亦永不碳化折斷！
+            <strong>科學 SOP：</strong>竹籤（天然毛竹）木質纖維充滿細微空氣毛細管。素烤前放入<strong>飽和溫鹽水（水溫約 50°C，鹽度 3%）</strong>浸泡至少 <strong>30-40 分鐘</strong>。溫水加速分子擴散排擠空氣，鹽分提高纖維燃點；串好食材後，<strong>露在烤架外的竹籤手握端以一小條鋁箔紙緊密捏緊包覆</strong>，形成絕熱盾牌，任憑大火狂吹亦永不碳化折斷！
           </p>
         </div>
 
@@ -2820,7 +2820,7 @@ html_content = '''<!DOCTYPE html>
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-brand" style="max-width: 420px;">
-        <h3>極致純素烤肉全書</h3>
+        <h3>極致素烤全書</h3>
         <p style="color: #c9ded3; font-size: 0.85rem; line-height: 1.7;">
           The Definitive Vegan BBQ Compendium: Allium-Free Master Craft & Gastronomic Thermodynamics.<br>
           本手冊嚴格遵循 100% 無五辛純植物性原料研製，依據「優活健康網」中秋低鈉指南與「找蔬食」露營實戰設計，專為追求極致風味之現代蔬食者與餐飲主廚打造。
@@ -2836,7 +2836,7 @@ html_content = '''<!DOCTYPE html>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#prep-checklist" style="color:inherit; text-decoration:none;">35項旗艦備料勾選清單</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#module-ingredients" style="color:inherit; text-decoration:none;">18款食材熱力學圖鑑</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#broccoli-special" style="color:inherit; text-decoration:none;">青花菜平切防褐化專題</a></li>
-          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-sauces" style="color:inherit; text-decoration:none;">九大無五辛自調烤肉醬</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-sauces" style="color:inherit; text-decoration:none;">九大無五辛自調素烤醬</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#module-skewers" style="color:inherit; text-decoration:none;">五大金牌串烤黃金矩陣</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#dessert-section" style="color:inherit; text-decoration:none;">炭火尾韻純素甜點專區</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#module-heat-guide" style="color:inherit; text-decoration:none;">三區炭火架構與救援指南</a></li>
