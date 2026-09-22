@@ -1,0 +1,3019 @@
+# -*- coding: utf-8 -*-
+"""
+Builder script for REV 2026.3 of 《極致純素烤肉全書：食材圖鑑、無五辛特調醬與科學燒烤指南》
+Full expansion: 35 checklist items, 9 sauces, 5 skewer matrix + dessert zone, expanded ingredient categories.
+"""
+
+import os
+
+html_content = '''<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>極致純素烤肉全書：食材圖鑑、無五辛特調醬與科學燒烤指南</title>
+  
+  <!-- Google Fonts: Noto Sans TC, Noto Serif TC, Playfair Display, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* ==========================================================================
+       1. CSS 核心變數與設計基底（Design Tokens）
+       現代大地典雅風格：暖木焦糖、高雅墨綠、純厚米白、炭黑
+       符合 WCAG AA 閱讀高對比標準
+       ========================================================================== */
+    :root {
+      --primary-forest: #1c382b;       /* 墨綠主色 */
+      --primary-forest-light: #2c5340; /* 淺墨綠 */
+      --forest-tint: #f0f5f2;          /* 墨綠極淺襯底 */
+      --caramel-wood: #a65d28;         /* 焦糖木質調 */
+      --caramel-gold: #c98838;         /* 金棕強調色 */
+      --caramel-soft: #fdf6ec;         /* 暖金淺底 */
+      --charcoal-black: #1f1e1d;       /* 炭火濃黑（文字） */
+      --charcoal-sub: #4b4845;         /* 次級深灰文字 */
+      --parchment-cream: #faf7f2;      /* 米白羊皮紙底色 */
+      --card-white: #ffffff;           /* 純白卡片面 */
+      --border-subtle: #e5dfd5;        /* 優雅邊線 */
+      --border-accent: #d4a973;        /* 金邊線 */
+      --shadow-sm: 0 2px 8px rgba(31, 30, 29, 0.05);
+      --shadow-md: 0 6px 20px rgba(31, 30, 29, 0.08);
+      --shadow-lg: 0 14px 36px rgba(31, 30, 29, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --font-serif: 'Noto Serif TC', 'Playfair Display', serif;
+      --font-sans: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--parchment-cream);
+      color: var(--charcoal-black);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* 頂級印刷感裝飾背景條 */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-forest), var(--caramel-gold), var(--caramel-wood));
+      z-index: 9999;
+    }
+
+    /* ==========================================================================
+       2. 共用原子樣式與排版工具
+       ========================================================================== */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h1, h2, h3, h4, .serif-font {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      color: var(--charcoal-black);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-forest { background: var(--forest-tint); color: var(--primary-forest); border: 1px solid rgba(28, 56, 43, 0.2); }
+    .badge-gold { background: var(--caramel-soft); color: var(--caramel-wood); border: 1px solid rgba(166, 93, 40, 0.25); }
+    .badge-dark { background: var(--charcoal-black); color: #fff; }
+
+    .sci-box {
+      background: var(--forest-tint);
+      border-left: 4px solid var(--primary-forest);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 12px 0;
+      font-size: 0.92rem;
+      color: var(--primary-forest);
+    }
+    .sci-box strong {
+      color: var(--primary-forest);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tip-box {
+      background: var(--caramel-soft);
+      border-left: 4px solid var(--caramel-gold);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 12px 0;
+      font-size: 0.92rem;
+      color: #6d4218;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .section-subtitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--caramel-wood);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .section-title {
+      font-size: 1.95rem;
+      color: var(--primary-forest);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 12px;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 3px;
+      background: var(--caramel-gold);
+      border-radius: 2px;
+    }
+    .section-desc {
+      margin-top: 12px;
+      font-size: 1rem;
+      color: var(--charcoal-sub);
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ==========================================================================
+       3. 頁首書籍封面風格 Banner（Hero Header）
+       ========================================================================== */
+    .hero-header {
+      background: linear-gradient(135deg, #172c22 0%, #1f3d2f 50%, #14241c 100%);
+      color: #ffffff;
+      padding: 56px 20px 48px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-accent);
+    }
+    .hero-header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201, 136, 56, 0.15) 0%, rgba(201, 136, 56, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 16px;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hero-badge-item {
+      background: rgba(255, 255, 255, 0.12);
+      color: #e5dfd5;
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.05em;
+    }
+    .hero-badge-item.highlight {
+      background: var(--caramel-gold);
+      color: var(--charcoal-black);
+      font-weight: 700;
+    }
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+    .hero-title span {
+      color: #e9be7d;
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+    }
+    .hero-lead {
+      font-size: 1.12rem;
+      line-height: 1.8;
+      color: #d8e2dc;
+      max-width: 860px;
+      margin-bottom: 28px;
+    }
+    .hero-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+      font-family: var(--font-sans);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #d89745 0%, #b87528 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(184, 117, 40, 0.35);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #e3a352 0%, #c57e2e 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(184, 117, 40, 0.45);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(6px);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ==========================================================================
+       4. 快速導覽列與現場單手操作吸頂導航（Sticky Quick Nav）
+       ========================================================================== */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 247, 242, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 8px 0;
+      transition: all 0.3s ease;
+    }
+    .nav-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      align-items: center;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .nav-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-pill {
+      white-space: nowrap;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--charcoal-sub);
+      text-decoration: none;
+      border-radius: 20px;
+      background: #f0eae1;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-pill:hover, .nav-pill.active {
+      background: var(--primary-forest);
+      color: #ffffff;
+    }
+    .nav-checklist-indicator {
+      margin-left: auto;
+      font-size: 0.82rem;
+      background: var(--caramel-soft);
+      border: 1px solid var(--border-accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      color: var(--caramel-wood);
+      font-weight: 700;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       5. 互動備料清單（Checklist Tool - 35項旗艦版）
+       ========================================================================== */
+    .checklist-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 24px;
+      margin: 32px 0 48px;
+      position: relative;
+    }
+    .checklist-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 14px;
+    }
+    .checklist-title {
+      font-size: 1.25rem;
+      color: var(--primary-forest);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .checklist-progress-wrap {
+      flex: 1;
+      max-width: 240px;
+      background: #eee8de;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .checklist-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--caramel-wood), var(--primary-forest));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .checklist-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-xs {
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid var(--border-subtle);
+      background: var(--parchment-cream);
+      color: var(--charcoal-sub);
+    }
+    .btn-xs:hover {
+      background: #e9e2d6;
+    }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px 16px;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      user-select: none;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+    .check-item:hover {
+      background: var(--forest-tint);
+    }
+    .check-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #a89f91;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      margin-top: 2px;
+      position: relative;
+      background: #fff;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .check-item input[type="checkbox"]:checked {
+      background: var(--primary-forest);
+      border-color: var(--primary-forest);
+    }
+    .check-item input[type="checkbox"]:checked::after {
+      content: "✓";
+      position: absolute;
+      top: -3px;
+      left: 2px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .check-item.done span.check-text {
+      text-decoration: line-through;
+      color: #9c958b;
+    }
+    .check-category-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: auto;
+      padding: 1px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .tag-veg { background: #eef6f0; color: #2d6a4f; }
+    .tag-pro { background: #fdf2e9; color: #a0522d; }
+    .tag-mush { background: #f4ece4; color: #6f4e37; }
+    .tag-root { background: #fcf6e8; color: #9c6c1b; }
+    .tag-taiwan { background: #faedea; color: #b23a22; }
+    .tag-dessert { background: #f5edf7; color: #783587; }
+
+    /* ==========================================================================
+       6. 模組 1：烤肉食材分類圖鑑與熱力學處理法
+       ========================================================================== */
+    .module-section {
+      padding: 56px 0;
+    }
+
+    /* 篩選分頁按鈕 */
+    .filter-tabs-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--charcoal-sub);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-btn:hover {
+      background: var(--parchment-cream);
+      border-color: var(--caramel-gold);
+    }
+    .filter-btn.active {
+      background: var(--primary-forest);
+      color: #fff;
+      border-color: var(--primary-forest);
+      box-shadow: 0 4px 10px rgba(28, 56, 43, 0.2);
+    }
+
+    /* 食材圖鑑卡片佈局 */
+    .ingredient-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .ingredient-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .ingredient-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .card-top-bar {
+      height: 6px;
+      background: linear-gradient(90deg, var(--caramel-wood), var(--caramel-gold));
+    }
+    .card-top-bar.vegetable { background: linear-gradient(90deg, #2b6e4e, #71a986); }
+    .card-top-bar.protein { background: linear-gradient(90deg, #a65d28, #d4955a); }
+    .card-top-bar.mushroom { background: linear-gradient(90deg, #6e4b2b, #a87e5b); }
+    .card-top-bar.starch { background: linear-gradient(90deg, #c78622, #e8b356); }
+    .card-top-bar.fruit { background: linear-gradient(90deg, #e67e22, #f39c12); }
+    .card-top-bar.taiwan-classic { background: linear-gradient(90deg, #b23a22, #e26d5c); }
+    .card-top-bar.dessert { background: linear-gradient(90deg, #8e44ad, #bb8fce); }
+
+    .ingredient-content {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .ingredient-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .ingredient-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--charcoal-black);
+    }
+    .ingredient-specs {
+      background: var(--parchment-cream);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin: 12px 0 16px;
+      font-size: 0.88rem;
+    }
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.06);
+    }
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+    .spec-label {
+      color: var(--charcoal-sub);
+      font-weight: 500;
+    }
+    .spec-val {
+      font-weight: 700;
+      color: var(--primary-forest);
+      font-family: var(--font-mono);
+    }
+    .ingredient-physics {
+      font-size: 0.92rem;
+      color: var(--charcoal-sub);
+      line-height: 1.7;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+    .ingredient-pitfall {
+      background: #fdf2f0;
+      border-left: 3px solid #d9534f;
+      padding: 8px 12px;
+      font-size: 0.83rem;
+      color: #902624;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    /* 青花菜專題專用特殊版面 */
+    .broccoli-featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #ffffff 0%, #f6faf7 100%);
+      border: 2px solid #327552;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      margin-top: 16px;
+    }
+    .broccoli-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .broccoli-step-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .broccoli-step-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e5638;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    /* ==========================================================================
+       7. 模組 2：九大無五辛純素特調烤肉醬
+       ========================================================================== */
+    .sauce-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .sauce-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      transition: box-shadow 0.2s ease;
+    }
+    .sauce-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .sauce-sidebar {
+      background: linear-gradient(180deg, var(--forest-tint) 0%, #e6efe9 100%);
+      padding: 28px 24px;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+    }
+    .sauce-sidebar.american { background: linear-gradient(180deg, #fdf4ed 0%, #fae6d6 100%); }
+    .sauce-sidebar.satay { background: linear-gradient(180deg, #fdf7eb 0%, #f7ebd0 100%); }
+    .sauce-sidebar.sichuan { background: linear-gradient(180deg, #fdf0ed 0%, #fcdcd6 100%); }
+    .sauce-sidebar.korean { background: linear-gradient(180deg, #fcf3f2 0%, #fbe2df 100%); }
+    .sauce-sidebar.shacha { background: linear-gradient(180deg, #f7eee4 0%, #eddcc8 100%); }
+    .sauce-sidebar.mediterranean { background: linear-gradient(180deg, #f0f7ea 0%, #dbeecf 100%); }
+    .sauce-sidebar.thai { background: linear-gradient(180deg, #f7f9ea 0%, #ebf2cb 100%); }
+    .sauce-sidebar.pomelo { background: linear-gradient(180deg, #f7f9e8 0%, #e6f0cf 100%); }
+
+    .sauce-index-num {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1;
+      opacity: 0.4;
+      margin-bottom: 4px;
+    }
+    .sauce-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--charcoal-black);
+      margin-bottom: 10px;
+    }
+    .sauce-flavor-profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .sauce-timing-tag {
+      margin-top: auto;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .sauce-timing-tag h5 {
+      font-size: 0.82rem;
+      color: var(--caramel-wood);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .sauce-timing-tag p {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary-forest);
+      line-height: 1.4;
+    }
+    .sauce-body {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sauce-section-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--charcoal-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 4px;
+    }
+    .recipe-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .recipe-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .recipe-table th, .recipe-table td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #efeae1;
+    }
+    .recipe-table th {
+      background: var(--parchment-cream);
+      color: var(--charcoal-sub);
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    .recipe-table td.amount {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--caramel-wood);
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       8. 模組 3：高密度蛋白製品深層入味醃漬工法（天貝與豆干）
+       ========================================================================== */
+    .marinate-workflow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .step-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .step-number {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--caramel-gold);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .step-card h4 {
+      font-size: 1.05rem;
+      color: var(--primary-forest);
+      margin-bottom: 10px;
+    }
+    .step-card p {
+      font-size: 0.88rem;
+      color: var(--charcoal-sub);
+      line-height: 1.6;
+    }
+    .formula-banner {
+      background: linear-gradient(135deg, #1c382b 0%, #294c3c 100%);
+      color: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px 30px;
+      margin-bottom: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .formula-code {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      color: #ffd992;
+      background: rgba(0,0,0,0.25);
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 217, 146, 0.3);
+    }
+    .marinade-recipes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .marinade-recipe-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       9. 模組 4：金牌串烤風味搭配指南（黃金組合 5 組 + 甜點專區）
+       ========================================================================== */
+    .skewer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .skewer-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .skewer-badge-bar {
+      background: var(--parchment-cream);
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .skewer-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .skewer-sequence {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--forest-tint);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+    }
+    .skewer-node {
+      background: #ffffff;
+      border: 1px solid rgba(28, 56, 43, 0.2);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary-forest);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .skewer-arrow {
+      color: var(--caramel-wood);
+      font-size: 0.8rem;
+    }
+
+    /* 甜品專區卡片樣式 */
+    .dessert-featured-section {
+      margin-top: 48px;
+      background: linear-gradient(135deg, #ffffff 0%, #fdf8f5 100%);
+      border: 2px solid #d4955a;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+    }
+    .dessert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .dessert-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .dessert-card h4 {
+      font-size: 1.12rem;
+      color: var(--caramel-wood);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    /* ==========================================================================
+       10. 模組 5：燒烤火候配置與常見失敗救援指南
+       ========================================================================== */
+    .fire-zones-diagram {
+      background: linear-gradient(180deg, #2a2826 0%, #171615 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid #4a4540;
+    }
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .zone-column {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .zone-column.hot {
+      border-color: #ff5e3a;
+      background: linear-gradient(180deg, rgba(255, 94, 58, 0.12) 0%, rgba(255, 94, 58, 0.02) 100%);
+    }
+    .zone-column.medium {
+      border-color: #ffa534;
+      background: linear-gradient(180deg, rgba(255, 165, 52, 0.12) 0%, rgba(255, 165, 52, 0.02) 100%);
+    }
+    .zone-column.cool {
+      border-color: #5bb381;
+      background: linear-gradient(180deg, rgba(91, 179, 129, 0.12) 0%, rgba(91, 179, 129, 0.02) 100%);
+    }
+    .zone-temp {
+      font-family: var(--font-mono);
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+    .zone-column.hot .zone-temp { color: #ff7656; }
+    .zone-column.medium .zone-temp { color: #ffb852; }
+    .zone-column.cool .zone-temp { color: #7ad19f; }
+
+    .troubleshoot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .troubleshoot-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .troubleshoot-card h4 {
+      font-size: 1.15rem;
+      color: var(--caramel-wood);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 頁尾出版說明 */
+    .site-footer {
+      background: #192720;
+      color: #9eb5a8;
+      padding: 50px 20px 70px;
+      margin-top: 60px;
+      border-top: 4px solid var(--caramel-gold);
+      font-size: 0.9rem;
+    }
+    .footer-content {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    .footer-brand h3 {
+      color: #ffffff;
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+    .footer-col h4 {
+      color: #e9be7d;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 6px;
+    }
+
+    /* ==========================================================================
+       11. 響應式佈局適應（Media Queries: Mobile & Tablet）
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .sauce-card {
+        grid-template-columns: 1fr;
+      }
+      .sauce-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .marinate-workflow {
+        grid-template-columns: 1fr 1fr;
+      }
+      .marinade-recipes-grid {
+        grid-template-columns: 1fr;
+      }
+      .zones-grid {
+        grid-template-columns: 1fr;
+      }
+      .broccoli-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 1.85rem;
+      }
+      .hero-lead {
+        font-size: 0.98rem;
+      }
+      .section-title {
+        font-size: 1.55rem;
+      }
+      .marinate-workflow {
+        grid-template-columns: 1fr;
+      }
+      .checklist-card {
+        padding: 16px;
+      }
+      .sauce-body {
+        padding: 20px 16px;
+      }
+      .ingredient-content {
+        padding: 18px 16px;
+      }
+      .recipe-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    /* ==========================================================================
+       12. 完美列印與轉 PDF 樣式（@media print）
+       規範要求：
+       - @page { size: A4 portrait; margin: 12mm 15mm; }
+       - 嚴格避免分頁截斷：break-inside: avoid;
+       - 隱藏按鈕、篩選標籤、無關互動
+       - 確保墨水清晰高對比深色文字
+       ========================================================================== */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 15mm;
+      }
+
+      *, *::before, *::after {
+        background: transparent !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #111111 !important;
+        font-size: 9.5pt;
+        line-height: 1.45;
+      }
+
+      body::before {
+        display: none !important;
+      }
+
+      /* 隱藏互動要素 */
+      .no-print,
+      .sticky-nav,
+      .hero-action-row,
+      .filter-tabs-container,
+      .checklist-actions,
+      .nav-checklist-indicator,
+      .btn {
+        display: none !important;
+      }
+
+      .hero-header {
+        background: #ffffff !important;
+        color: #000 !important;
+        padding: 10px 0 20px !important;
+        border-bottom: 2px solid #333 !important;
+      }
+      .hero-title {
+        font-size: 20pt !important;
+        color: #000 !important;
+      }
+      .hero-lead {
+        font-size: 9.5pt !important;
+        color: #333 !important;
+      }
+      .hero-badge-item {
+        border: 1px solid #666 !important;
+        color: #000 !important;
+      }
+
+      /* 顯示所有被篩選卡片 */
+      .ingredient-card, .sauce-card, .skewer-card, .troubleshoot-card, .step-card, .dessert-card, .dessert-featured-section {
+        display: flex !important;
+        border: 1px solid #999 !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 12mm !important;
+      }
+
+      .sauce-card, .dessert-featured-section {
+        display: block !important;
+      }
+      .sauce-sidebar {
+        border-right: none !important;
+        border-bottom: 1px solid #ccc !important;
+        padding: 10px 14px !important;
+      }
+      .sauce-body {
+        padding: 12px 14px !important;
+      }
+
+      .section-title {
+        color: #000 !important;
+        font-size: 15pt !important;
+      }
+      .section-title::after {
+        background: #333 !important;
+      }
+
+      .sci-box, .tip-box, .ingredient-pitfall {
+        border-left: 3px solid #333 !important;
+        background: #f9f9f9 !important;
+      }
+
+      .formula-banner {
+        border: 1px solid #333 !important;
+        background: #f4f4f4 !important;
+        padding: 12px !important;
+      }
+      .formula-code {
+        border: 1px solid #444 !important;
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      .fire-zones-diagram {
+        border: 1px solid #444 !important;
+        background: #fff !important;
+        color: #000 !important;
+        padding: 12px !important;
+        break-inside: avoid;
+      }
+      .zone-column {
+        border: 1px solid #999 !important;
+      }
+
+      .page-break-before {
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .checklist-card {
+        border: 1px solid #999 !important;
+        padding: 12px !important;
+        break-inside: avoid;
+      }
+      .checklist-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      .check-item input[type="checkbox"] {
+        border: 1px solid #444 !important;
+      }
+
+      .site-footer {
+        border-top: 1px solid #999 !important;
+        padding: 15px 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       頁首書籍風格 Hero Header
+       ========================================================================== -->
+  <header class="hero-header">
+    <div class="hero-container">
+      <div class="hero-meta-bar">
+        <div class="hero-badges">
+          <span class="hero-badge-item highlight"><i class="fa-solid fa-leaf"></i> 100% 嚴格純素</span>
+          <span class="hero-badge-item"><i class="fa-solid fa-ban"></i> 零五辛（無蔥蒜韭薤洋蔥）</span>
+          <span class="hero-badge-item"><i class="fa-solid fa-flask-vial"></i> 熱力學科學燒烤法</span>
+          <span class="hero-badge-item"><i class="fa-solid fa-award"></i> 優活健康網 × 找蔬食雙權威指南</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #b8ccbf; font-family: var(--font-mono);">
+          REV. 2026.3 / GASTRONOMY LAB EDITION
+        </div>
+      </div>
+
+      <h1 class="hero-title">
+        極致純素烤肉全書<br>
+        <span>食材圖鑑、無五辛特調醬與科學燒烤指南</span>
+      </h1>
+      
+      <p class="hero-lead">
+        揚棄傳統純素燒烤「乾、扁、焦、不入味」之刻板印象。本書由資深蔬食研發主廚與烹飪熱力學視角共同編纂，
+        融匯「優活健康網」低鈉抗氧化營養指引與「找蔬食 Start Vegan」野炊實戰經驗，
+        解析高保水植物組織、幾丁質蕈傘保水層、長鏈菌絲鎖水力、紫米糕支鏈澱粉回軟機制與文旦鮮柚果膠低卡調味，
+        收錄 35 項專業備料清單、18 款食材科學解析、9 款無五辛經典名醬、5 組金牌串烤矩陣與炭火尾韻甜點專區。
+      </p>
+
+      <div class="hero-action-row no-print">
+        <button class="btn btn-gold" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> 🖨️ 匯出 / 列印出版級 PDF
+        </button>
+        <a href="#prep-checklist" class="btn btn-outline">
+          <i class="fa-solid fa-clipboard-check"></i> 前往 35 項備料清單
+        </a>
+        <a href="#module-sauces" class="btn btn-outline">
+          <i class="fa-solid fa-mortar-pestle"></i> 直達九大無五辛醬料
+        </a>
+        <a href="#dessert-section" class="btn btn-outline">
+          <i class="fa-solid fa-cookie-bite"></i> 炭火尾韻純素甜品
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       吸頂快速操作列（Sticky Quick Nav）
+       ========================================================================== -->
+  <nav class="sticky-nav no-print" id="quickNav">
+    <div class="nav-scroll">
+      <a href="#prep-checklist" class="nav-pill active"><i class="fa-solid fa-list-check"></i> 備料清單</a>
+      <a href="#module-ingredients" class="nav-pill"><i class="fa-solid fa-carrot"></i> 食材熱力學圖鑑</a>
+      <a href="#broccoli-special" class="nav-pill"><i class="fa-solid fa-seedling"></i> 青花菜專題</a>
+      <a href="#module-sauces" class="nav-pill"><i class="fa-solid fa-jar"></i> 九大無五辛醬料</a>
+      <a href="#module-marinate" class="nav-pill"><i class="fa-solid fa-water"></i> 蛋白製品深層入味</a>
+      <a href="#module-skewers" class="nav-pill"><i class="fa-solid fa-utensils"></i> 金牌串烤矩陣</a>
+      <a href="#dessert-section" class="nav-pill"><i class="fa-solid fa-ice-cream"></i> 純素甜點專區</a>
+      <a href="#module-heat-guide" class="nav-pill"><i class="fa-solid fa-fire-flame-curved"></i> 三區火候與救援</a>
+
+      <div class="nav-checklist-indicator" onclick="document.getElementById('prep-checklist').scrollIntoView({behavior:'smooth'})">
+        <i class="fa-solid fa-check-double"></i> 備料進度：<span id="navCheckCount">0/35</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ==========================================================================
+         工具模組：烤肉必備食材互動備料清單（Checklist Tool - 35項權威旗艦版）
+         ========================================================================== -->
+    <section id="prep-checklist" style="scroll-margin-top: 70px;">
+      <div class="checklist-card">
+        <div class="checklist-header">
+          <div class="checklist-title">
+            <i class="fa-solid fa-clipboard-list" style="color: var(--caramel-wood);"></i>
+            <h3>烤肉必備食材與特調配方互動備料清單（全 35 項）</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-forest);">
+              已勾選 <span id="checkSummary">0</span> / 35 項 (<span id="checkPercent">0%</span>)
+            </div>
+            <div class="checklist-progress-wrap">
+              <div class="checklist-progress-bar" id="progressBar"></div>
+            </div>
+            <div class="checklist-actions no-print">
+              <button class="btn-xs" onclick="resetChecklist()"><i class="fa-solid fa-arrow-rotate-left"></i> 重設勾選</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="checklist-grid" id="checklistGrid">
+          <!-- 高保水蔬菜 10 項 -->
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">綠櫛瓜 (切片8mm厚度)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">帶殼筊白筍 (保留外殼2-3層)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">帶殼黃金玉米筍 (帶鬚帶內葉)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">日本圓茄 (12mm厚切+交叉劃刀)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">青花菜 (縱向剖切大平切面)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">綠糯米椒 (整支微刺小氣孔)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">鮮採秋葵 (保留完整錐形蒂頭)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">翠綠四季豆 (去筋整串排烤)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">鮮脆綠蘆筍 (去粗根薄刷橄欖油)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">彩色小番茄串 (表面扎孔防爆汁)</span><span class="check-category-tag tag-veg">[蔬菜]</span></label>
+
+          <!-- 經典植物蛋白 10 項 -->
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">大溪五香厚豆干 (雙面2mm菱格刀)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純生豆包 (展開吸油後折疊)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">天然印尼天貝 (鋼針密集穿刺)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">非基改凍豆腐 (手掌完全壓乾孔隙)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素頂級百頁豆腐 (切1.5cm厚片)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">傳統古法麵腸 (斜切拉花切口)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素牛蒡甜不辣 (劃淺紋增加吸醬)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素黑輪片 (斜角切塊增面積)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">特級植物肉丸 (預冷定型防散架)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">手工腐皮蘆筍捲 (腐皮緊密捲包)</span><span class="check-category-tag tag-pro">[高蛋白]</span></label>
+
+          <!-- 高鮮蕈菇類 5 項 -->
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">特級杏鮑菇 (厚切1.5cm滾刀塊)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">生鮮厚肉香菇 (去蒂蕈傘十字劃痕)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">原木波特菇 (去粗柄保留完整蕈杯)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">鮮採生猴頭菇 (手撕塊汆燙去苦)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">薑絲金針菇鋁箔盒 (包覆黑胡椒昆布露)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
+
+          <!-- 根莖果物 5 項 -->
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">台農57號黃金地瓜 (預蒸8分熟)</span><span class="check-category-tag tag-root">[根莖果物]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">雙色水果玉米 (切段厚約3cm)</span><span class="check-category-tag tag-root">[根莖果物]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">日本山藥 (去皮1cm厚圓片)</span><span class="check-category-tag tag-root">[根莖果物]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">栗子南瓜 (帶皮7mm新月厚片)</span><span class="check-category-tag tag-root">[根莖果物]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">澎湖絲瓜草菇盅 (雙層鋁箔盒密封)</span><span class="check-category-tag tag-root">[根莖果物]</span></label>
+
+          <!-- 台式烤料與甜點 5 項 -->
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">經典純素紫米糕 (切厚片雙面刷油)</span><span class="check-category-tag tag-taiwan">[台味素料]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">金鑽鳳梨厚片 (切輪片厚約1.5cm)</span><span class="check-category-tag tag-dessert">[果物甜點]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素日式烤麻糬 (小方塊低溫翻烤)</span><span class="check-category-tag tag-dessert">[療癒甜點]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素無明膠棉花糖 (海藻膠配方)</span><span class="check-category-tag tag-dessert">[療癒甜點]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">肉桂巧克力烤香蕉 (帶皮填黑可可)</span><span class="check-category-tag tag-dessert">[療癒甜點]</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       模組 1：烤肉食材分類圖鑑與熱力學處理法
+       ========================================================================== -->
+    <section id="module-ingredients" class="module-section" style="scroll-margin-top: 60px;">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">MODULE 01 / THERMODYNAMICS & INGREDIENT ENCYCLOPEDIA</span>
+        <h2 class="section-title">烤肉食材分類圖鑑與熱力學處理法</h2>
+        <p class="section-desc">
+          蔬食組織缺乏動物性飽和脂肪網。必須藉由「厚度控制、表面油脂阻水膜、植物體自體水蒸氣腔」三位一體熱力學控制，
+          結合支鏈澱粉受熱回軟曲線與長鏈菌絲鎖水機制，方能達成多汁且焦香之巔峰境界。
+        </p>
+      </div>
+
+      <!-- 分類標籤按鈕 (Vanilla JS 篩選器) -->
+      <div class="filter-tabs-container no-print">
+        <button class="filter-btn active" onclick="filterIngredients('all', this)"><i class="fa-solid fa-border-all"></i> 全部食材</button>
+        <button class="filter-btn" onclick="filterIngredients('vegetable', this)"><i class="fa-solid fa-leaf"></i> 高保水蔬菜</button>
+        <button class="filter-btn" onclick="filterIngredients('protein', this)"><i class="fa-solid fa-cubes-stacked"></i> 經典植物蛋白</button>
+        <button class="filter-btn" onclick="filterIngredients('mushroom', this)"><i class="fa-solid fa-shield-halved"></i> 高鮮蕈菇類</button>
+        <button class="filter-btn" onclick="filterIngredients('starch', this)"><i class="fa-solid fa-bowl-rice"></i> 高澱粉根莖</button>
+        <button class="filter-btn" onclick="filterIngredients('taiwan-classic', this)"><i class="fa-solid fa-utensils"></i> 台味素料</button>
+        <button class="filter-btn" onclick="filterIngredients('fruit', this)"><i class="fa-solid fa-lemon"></i> 焦糖化果物</button>
+        <button class="filter-btn" onclick="filterIngredients('dessert', this)"><i class="fa-solid fa-cookie-bite"></i> 療癒甜點</button>
+      </div>
+
+      <!-- 食材網格 -->
+      <div class="ingredient-grid" id="ingredientCardsContainer">
+        
+        <!-- 卡片 1：綠櫛瓜 -->
+        <div class="ingredient-card" data-cat="vegetable">
+          <div class="card-top-bar vegetable"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-droplet"></i> 高保水蔬菜</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">綠櫛瓜 (Zucchini)</h3>
+              </div>
+              <span class="badge badge-dark">水分含量 94%</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">最佳厚度規格</span><span class="spec-val">7 - 8 mm 斜切片</span></div>
+              <div class="spec-item"><span class="spec-label">油脂阻水膜</span><span class="spec-val">初榨橄欖油 / 玄米油</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中火區 (160-180°C)</span></div>
+              <div class="spec-item"><span class="spec-label">翻面時機</span><span class="spec-val">底面微焦黃，表面冒出微水珠</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>櫛瓜細胞壁在超過 70°C 時果膠質開始水解。若切低於 5mm，水分急速蒸散塌軟成泥；厚度達 8mm 時，兩面刷油封住毛細孔形成「物理油脂阻水層」，內部水蒸氣在封閉組織內產生自蒸熱循環，烤出外脆爽、內爆汁之甘甜口感。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>致命地雷：</strong>未烤前嚴禁預先撒鹽！鹽分破壞滲透壓引發急速出水，會使烤網瞬間降溫並淪為水煮狀態。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 2：甜彩椒 -->
+        <div class="ingredient-card" data-cat="vegetable">
+          <div class="card-top-bar vegetable"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-droplet"></i> 高保水蔬菜</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">甜彩椒 (Bell Pepper)</h3>
+              </div>
+              <span class="badge badge-dark">水分含量 92%</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">裁切規格</span><span class="spec-val">3.5 × 3.5 cm 寬塊片</span></div>
+              <div class="spec-item"><span class="spec-label">朝向策略</span><span class="spec-val">皮朝下先烤 (利用蠟質角質層)</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">直火區至中火區</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>彩椒表皮天然覆蓋緻密蠟質角質層（Cuticle）。烤製時將椒皮朝向炭火，角質層耐受高溫並阻擋熱輻射直接碳化內層果肉；底層果肉在自身穹頂下被水蒸氣熟化，果糖在高溫受熱後濃縮焦糖化，帶來驚人甜度。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>操作要訣：</strong>內側白色海綿狀胎座必須用刀片片除乾淨，否則會吸收過多苦味分子並阻礙熱對流傳導。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 3：筊白筍與玉米筍 -->
+        <div class="ingredient-card" data-cat="vegetable">
+          <div class="card-top-bar vegetable"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-temperature-half"></i> 帶殼悶烤系</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">筊白筍 & 玉米筍</h3>
+              </div>
+              <span class="badge badge-dark">高壓自體蒸氣艙</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">預處理規範</span><span class="spec-val">保留外層 2-3 瓣保護苞葉</span></div>
+              <div class="spec-item"><span class="spec-label">烹調機制</span><span class="spec-val">天然微型高壓氣室悶蒸</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中直火區 (180-200°C) 翻滾烤</span></div>
+              <div class="spec-item"><span class="spec-label">出爐判定</span><span class="spec-val">外殼微焦黑脫水、尾端冒熱氣</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>植物外苞葉富含纖維素與耐熱氣道，炭火炭化最外層苞葉（木質隔熱盾功能），內部 88% 水分受熱轉化為過熱蒸氣，在密封腔內循環燜熟筍肉，完全保留水溶性多醣與氨基酸甘甜。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>切記：</strong>勿在烤前剝得光禿禿！失去苞葉保護直火烘烤，水分在 3 分鐘內失水蒸散，筍體迅速乾扁起皺。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 4：薑絲枸杞澎湖絲瓜草菇盅【新增】 -->
+        <div class="ingredient-card" data-cat="vegetable">
+          <div class="card-top-bar vegetable"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-box-archive"></i> 封閉對流蒸烤</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">澎湖絲瓜草菇鋁箔盅</h3>
+              </div>
+              <span class="badge badge-dark">果膠水解多醣甜汁</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">切塊規格</span><span class="spec-val">絲瓜 2cm 滾刀塊 + 生草菇/鴻喜菇</span></div>
+              <div class="spec-item"><span class="spec-label">封裝工藝</span><span class="spec-val">雙層鋁箔密閉折邊微正壓盒</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中火慢烤區 (160-180°C) 10-12分鐘</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>澎湖絲瓜（十角絲瓜）水分高達 95%，其果膠質在 95°C 封閉環境下急速水解，釋出巨量天然多醣甘甜原湯。鋁箔微正壓封閉空間內，生薑辣素（Gingerol）揮發油與草菇鳥苷酸在上升水蒸氣流中循環對流，滴水不加即聚成一盅鮮美無比之天然甘露。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>密封警告：</strong>鋁箔折口必須嚴密捏合咬死（Crimp Sealing），若漏氣蒸氣逸散，絲瓜會氧化黑化且失去甜汁。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 5：綠糯米椒 -->
+        <div class="ingredient-card" data-cat="vegetable">
+          <div class="card-top-bar vegetable"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-pepper-hot"></i> 薄壁微起泡</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">綠糯米椒 (Shishito)</h3>
+              </div>
+              <span class="badge badge-dark">微氣囊熱破裂</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">前處理規格</span><span class="spec-val">整支保留蒂頭，刺入微孔</span></div>
+              <div class="spec-item"><span class="spec-label">起泡溫區</span><span class="spec-val">直火高溫區 (200-220°C)</span></div>
+              <div class="spec-item"><span class="spec-label">烘烤時間</span><span class="spec-val">90 - 120 秒急速翻動</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>糯米椒果壁極薄，水分約 90%。直火高溫使皮層與果肉間殘存氣體瞬間膨脹，形成經典的白斑虎皮微起泡（Blistering）。果皮薄層炭化釋放清甜揮發醛與微量辣椒素，內部果肉在高溫短時間內軟化，甘甜多汁不辛辣。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>防爆要訣：</strong>烤前務必以竹籤在椒身中段輕刺 1-2 個透氣微孔！否則受熱封閉蒸氣會引發氣室爆炸噴油。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 6：鮮採秋葵 -->
+        <div class="ingredient-card" data-cat="vegetable">
+          <div class="card-top-bar vegetable"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-shield"></i> 多醣黏液封閉</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">鮮採秋葵 (Okra)</h3>
+              </div>
+              <span class="badge badge-dark">果膠熱凝膠</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">修整工法</span><span class="spec-val">鉛筆刀法削去蒂頭外稜</span></div>
+              <div class="spec-item"><span class="spec-label">去毛前處理</span><span class="spec-val">粗鹽輕搓洗淨，熱風風乾</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中火區 (160-180°C)</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>秋葵黏液主要為半乳糖醛酸與鼠李糖組成的水溶性大分子多醣。削修蒂頭時不可切破頂端種子腔室；在封閉莢果內，黏液隨溫度升至 80°C 形成均勻熱凝膠（Thermal Hydrogel），咬開時外皮酥脆微焦，芯部滑潤無比。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>切忌：</strong>嚴禁橫切成星星狀段落再烤！切破後黏液在烤架上溢流燒焦碳化，內部乾燥發澀。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 7：純素海苔紫米糕（素米血）【新增】 -->
+        <div class="ingredient-card" data-cat="taiwan-classic">
+          <div class="card-top-bar taiwan-classic"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-bowl-rice"></i> 支鏈澱粉回軟</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">純素紫米糕 (素米血)</h3>
+              </div>
+              <span class="badge badge-dark">台味夜市靈魂</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">裁切厚度</span><span class="spec-val">15 mm 厚片 (受熱最均勻)</span></div>
+              <div class="spec-item"><span class="spec-label">物理抗硬化</span><span class="spec-val">下爐前雙面塗覆純麻油/花生油</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中弱火區 (140-160°C) 慢烤透心</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>紫糯米主要由高分子「支鏈澱粉（Amylopectin）」與海苔多醣膠結成緻密固態。冷藏狀態下澱粉老化（Retrogradation）質地硬挺；必須在中溫慢火下透過表面油脂熱傳導，使中心晶體結構重新吸水復性糊化回軟；外層多餘水分受熱蒸散，形成外酥脆硬、內軟糯拉絲之絕妙雙重質地。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>乾烤石化陷阱：</strong>嚴禁未抹油乾烤或放大火直烤！直火會瞬間抽乾表層水分，形成堅硬如石頭且無法咬動的厚皮焦炭。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 8：手工腐皮綠蘆筍捲【新增】 -->
+        <div class="ingredient-card" data-cat="protein">
+          <div class="card-top-bar protein"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-scroll"></i> 多層疏水酥脆</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">手工腐皮綠蘆筍捲</h3>
+              </div>
+              <span class="badge badge-dark">溫度梯度雙層平衡</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">捲製規格</span><span class="spec-val">非基改乾腐皮包覆 2-3 根嫩蘆筍</span></div>
+              <div class="spec-item"><span class="spec-label">熱力學梯度</span><span class="spec-val">外層 180°C 脫水 / 內層 100°C 自蒸</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中直火區快速翻面使外皮金黃</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>乾腐皮由大豆球蛋白與不飽和脂質交織成超薄多層膜。接觸炭火熱風時，外層腐皮表面水分急速蒸散形成「超脆千層薄殼」；外層阻絕熱輻射，內層蘆筍的水分在腐皮管腔內沸騰成微型蒸氣室，一口咬下外層卡滋酥脆、內層蘆筍爽脆多汁爆漿。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>封口固定：</strong>捲製結尾處需抹薄水澱粉封口或以竹籤精準穿刺固定，避免翻烤時受熱鬆脫解體。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 9：鮮採厚肉生猴頭菇【新增】 -->
+        <div class="ingredient-card" data-cat="mushroom">
+          <div class="card-top-bar mushroom"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-cloud"></i> 長鏈菌絲鎖水</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">厚肉鮮採生猴頭菇</h3>
+              </div>
+              <span class="badge badge-dark">極致仿肉纖維感</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">前處理SOP</span><span class="spec-val">撕大塊入 95°C 鹽水汆燙擠乾苦水</span></div>
+              <div class="spec-item"><span class="spec-label">深層浸漬</span><span class="spec-val">投入昆布薑汁漬液微負壓吸汁</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中大火區 (170-190°C) 烙烤焦香</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>猴頭菇（Hericium erinaceus）具有如肉絲般排列的長鏈多孔菌絲網絡。天然含有微量苦味素，經 95°C 汆燙能破坏苦味胜肽並排除氣阻；趁熱浸泡醃汁後，菌絲毛細管緊緊鎖住水分，在 180°C 烤架上蛋白質梅納反應散發出驚人的烤牛排般濃郁纖維肉感。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>生烤大忌：</strong>生猴頭菇絕對不可未經汆燙直接上架烤！苦味素未被洗去且菇體乾燥吸油，會變得苦澀難嚥。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 10：五香厚豆干與生豆包 -->
+        <div class="ingredient-card" data-cat="protein">
+          <div class="card-top-bar protein"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-cubes"></i> 高蛋白大豆</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">五香厚豆干 & 生豆包</h3>
+              </div>
+              <span class="badge badge-dark">梅納反應主力</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">厚豆干劃刀</span><span class="spec-val">雙面均勻劃入 2mm 菱格紋</span></div>
+              <div class="spec-item"><span class="spec-label">生豆包策略</span><span class="spec-val">先抹油低溫定型，再摺疊</span></div>
+              <div class="spec-item"><span class="spec-label">梅納黃金溫區</span><span class="spec-val">140°C - 165°C</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>豆干外皮緻密的大豆蛋白網阻礙醬汁滲入，2mm 菱格劃刀將表面積擴增 40% 以上，並切斷硬化膠原網；火候控制在 140-165°C 區間，還原糖與大豆氨基酸引發梅納反應，生成大量含氮雜環焦香化合物，肉感十足。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>火候警告：</strong>超過 180°C 刷醬會導致表面糖分急速焦碳化發苦，蛋白質內部卻依然冰冷未透。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 11：天然天貝與凍豆腐 -->
+        <div class="ingredient-card" data-cat="protein">
+          <div class="card-top-bar protein"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-cubes"></i> 發酵與多孔蛋白</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">天然天貝 & 凍豆腐</h3>
+              </div>
+              <span class="badge badge-dark">孔隙吸醬霸主</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">天貝前處理</span><span class="spec-val">鋼針穿刺破白幾丁質菌絲層</span></div>
+              <div class="spec-item"><span class="spec-label">凍豆腐孔徑</span><span class="spec-val">手掌完全壓乾海綿自由水</span></div>
+              <div class="spec-item"><span class="spec-label">吸醬機制</span><span class="spec-val">熱縮微負壓毛細吸引</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>天貝由少孢根黴菌固態發酵而成，白菌絲富含幾丁質排斥水分。穿刺打通微通道後，經熱膨脹水浴再浸入冷醬液，吸飽風味；凍豆腐冰晶融化後形成海綿孔洞，擠乾水分後成為極致吸醬介質。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>凍豆腐操作重點：</strong>若水分未擠壓完全，水分受熱氣化會稀釋刷醬，表面永遠無法形成金黃香脆酥皮。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 12：純素頂級百頁豆腐 -->
+        <div class="ingredient-card" data-cat="protein">
+          <div class="card-top-bar protein"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-cube"></i> 乳化凝膠系</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">純素百頁豆腐 (Baiye)</h3>
+              </div>
+              <span class="badge badge-dark">立體膨脹脆殼</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">切片規格</span><span class="spec-val">15 mm 厚切長方條塊</span></div>
+              <div class="spec-item"><span class="spec-label">膨脹熱機制</span><span class="spec-val">大豆分離蛋白網包裹乳化油脂</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中火慢烤區 (150-170°C)</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>百頁豆腐富含高分散植物油脂與分離大豆蛋白三維網絡。在中溫烘烤下，內部水分均勻轉化為微細蒸氣微泡，撐開蛋白網產生驚人的 1.5 倍立體膨脹（Puffing）；外層油脂析出形成「自體油炸」，外殼金黃極度酥脆，內部如舒芙蕾般軟嫩。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>直火警報：</strong>嚴禁直火大火！直火會使表面蛋白質迅速硬化，內部蒸氣無法舒展，離火後瞬間塌陷成硬韌油塊。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 13：傳統古法麵腸 -->
+        <div class="ingredient-card" data-cat="protein">
+          <div class="card-top-bar protein"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-bacon"></i> 螺旋麵筋纖維</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">傳統古法麵腸 (Gluten)</h3>
+              </div>
+              <span class="badge badge-dark">高溫拉絲焦脆</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">刀工處理</span><span class="spec-val">45度斜切連續拉花螺旋刀紋</span></div>
+              <div class="spec-item"><span class="spec-label">核心成分</span><span class="spec-val">麥穀蛋白與醇溶蛋白雙硫鍵</span></div>
+              <div class="spec-item"><span class="spec-label">適烤火區</span><span class="spec-val">中大火區 (170-190°C) 快速梅納</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>麵腸由小麥麵筋多層捲繞而成，分子間具備緻密的雙硫鍵交聯網絡。斜切拉花刀破壞表面連續收縮應力，烘烤時麵筋纖維在高溫下脫水拉絲，邊緣產生微脆炭香，且螺旋紋理形成強大的毛細吸醬槽，能抓牢濃郁烤醬。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>初烤忌油過多：</strong>初始階段僅需薄抹油，若泡在油中烤，麵筋無法完成脫水拉絲梅納反應，口感將變得皮韌難嚼。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 14：杏鮑菇與厚肉生香菇 -->
+        <div class="ingredient-card" data-cat="mushroom">
+          <div class="card-top-bar mushroom"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-shield"></i> 幾丁質骨架</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">杏鮑菇 & 厚肉生香菇</h3>
+              </div>
+              <span class="badge badge-dark">天然游離鮮味</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">杏鮑菇裁切</span><span class="spec-val">15 - 20 mm 滾刀厚塊</span></div>
+              <div class="spec-item"><span class="spec-label">生香菇關鍵</span><span class="spec-val">去蒂，蕈傘朝上嚴禁任意翻動</span></div>
+              <div class="spec-item"><span class="spec-label">核心成分</span><span class="spec-val">游離麩胺酸 + 鳥苷酸 (GMP)</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>蕈菇細胞壁由高分子幾丁質與葡聚醣構成，熱變性溫度極高。香菇「蕈傘朝上」烤法利用蕈杯作為微型容器：菌褶內大量釋出的游離麩胺酸與鳥苷酸原湯在杯中凝聚沸騰，一口咬下即是原汁鮮味炸彈。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>大忌：</strong>生香菇若不斷翻面，天然鮮湯汁液將全數漏入炭火中蒸發，只剩下乾柴皺褶的纖維。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 15：原木大波特菇 -->
+        <div class="ingredient-card" data-cat="mushroom">
+          <div class="card-top-bar mushroom"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-forest"><i class="fa-solid fa-bowl-food"></i> 巨型原湯盅</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">原木波特菇 (Portobello)</h3>
+              </div>
+              <span class="badge badge-dark">高濃度鳥苷酸濃縮</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">選材尺寸</span><span class="spec-val">直徑 10 - 12 cm 完好巨蕈</span></div>
+              <div class="spec-item"><span class="spec-label">操作SOP</span><span class="spec-val">旋轉去粗柄，蕈褶向上平放</span></div>
+              <div class="spec-item"><span class="spec-label">出汁標誌</span><span class="spec-val">蕈杯中蓄滿金褐天然菇湯沸騰</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>波特菇肉厚多汁，其菌褶富含鳥苷酸。平置中火區烘烤時，熱量由厚實蕈背均勻向上傳導，菇體水分溶解高濃度鮮味胺基酸，於天然凹槽內濃縮成極鮮清湯，質地肥厚宛若頂級牛排。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>切勿手癢：</strong>烘烤全程切勿用夾子下壓或翻轉，否則辛辛苦苦濃縮凝聚的頂級原湯將全數付之一炬。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 16：黃金地瓜與栗子南瓜 -->
+        <div class="ingredient-card" data-cat="starch">
+          <div class="card-top-bar starch"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-wheat-awn"></i> 澱粉酵素活化</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">台農地瓜 & 栗子南瓜</h3>
+              </div>
+              <span class="badge badge-dark">β-澱粉酶活化區</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">關鍵酵素溫區</span><span class="spec-val">60°C - 70°C 慢速糊化糖化</span></div>
+              <div class="spec-item"><span class="spec-label">南瓜切片規格</span><span class="spec-val">帶皮 7 - 8 mm 新月厚片</span></div>
+              <div class="spec-item"><span class="spec-label">地瓜預處理</span><span class="spec-val">預蒸至中心達 8 分熟或低溫慢烤</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>根莖果膠質在 75°C 水解，β-澱粉酶在 60-70°C 能將直鏈澱粉水解成高甜度麥芽糖。栗子南瓜與地瓜經適度帶皮厚切，果膠質降解後呈現粉質甘甜（Chestnut-like texture），脂溶性胡蘿蔔素隨表面油膜顯出明豔澄黃。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>生烤地瓜警告：</strong>生根莖直接丟入直火大火，熱穿透極差，外層碳化發黑而內部仍堅硬生澀。
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片 17：金鑽鳳梨厚片 -->
+        <div class="ingredient-card" data-cat="fruit">
+          <div class="card-top-bar fruit"></div>
+          <div class="ingredient-content">
+            <div class="ingredient-header">
+              <div>
+                <span class="badge badge-gold"><i class="fa-solid fa-lemon"></i> 焦糖化果物</span>
+                <h3 class="ingredient-name" style="margin-top:6px;">金鑽鳳梨厚片 (Pineapple)</h3>
+              </div>
+              <span class="badge badge-dark">110°C 果糖焦糖化</span>
+            </div>
+            <div class="ingredient-specs">
+              <div class="spec-item"><span class="spec-label">輪片厚度</span><span class="spec-val">15 mm 均勻厚輪片</span></div>
+              <div class="spec-item"><span class="spec-label">核心活性分子</span><span class="spec-val">鳳梨蛋白酶 (Bromelain)</span></div>
+              <div class="spec-item"><span class="spec-label">出爐標誌</span><span class="spec-val">表面形成金黃琥珀色焦糖烤痕</span></div>
+            </div>
+            <p class="ingredient-physics">
+              <strong>熱力學原理解析：</strong>鳳梨富含游離果糖與有機檸檬酸。果糖焦糖化溫度僅 105-110°C（遠低於蔗糖 160°C），在直火高溫區能迅速生成富含焦糖香與堅果香的呋喃化合物；升溫至 65°C 酵素鈍化前釋出的蛋白酶氣霧，能分解大豆蛋白油膩感，酸甜爆汁。
+            </p>
+            <div class="ingredient-pitfall">
+              <i class="fa-solid fa-triangle-exclamation"></i> <strong>切忌過薄：</strong>切片若小於 10mm，水分蒸散太快會使果肉失水塌陷成薄皮果乾，喪失多汁對比。
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 青花菜（綠色花椰菜）專題深度特刊 -->
+      <div class="broccoli-featured" id="broccoli-special">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 2px solid rgba(50, 117, 82, 0.2); padding-bottom: 12px;">
+          <div>
+            <span class="badge badge-forest"><i class="fa-solid fa-microscope"></i> 深度熱力學特刊</span>
+            <h3 style="font-size: 1.55rem; color: #1e5638; margin-top: 6px;">青花菜（綠花椰）完美炙烤方程式：平切面傳導與脫鎂葉綠素防護</h3>
+          </div>
+          <span class="badge badge-dark" style="background: #1e5638;">蔬食主廚獨家秘技</span>
+        </div>
+
+        <p style="margin-top: 14px; font-size: 0.96rem; color: #2e4537; line-height: 1.8;">
+          多數人視青花菜為「烤肉黑名單」，因其球狀花蕾極易燃燒焦黑，而粗壯花莖卻堅硬如生。
+          然而，一旦運用熱力學幾何解構與化學防護，青花菜能產出如堅果般迷人甜脆焦香（Charred Broccoli），成為全場最驚豔之明星食材！
+        </p>
+
+        <div class="broccoli-grid">
+          <div class="broccoli-step-card">
+            <div class="broccoli-step-title"><i class="fa-solid fa-ruler-combined"></i> 1. 幾何解構：縱切大平切面</div>
+            <p style="font-size: 0.9rem; color: var(--charcoal-sub);">
+              <strong>核心原理：</strong>嚴禁切成傳統圓球小朵。必須自粗莖向上縱向剖切，每一塊皆擁有「平坦的大縱剖面」，同時貫穿花莖與花蕾。平切面使食材能 100% 緊密貼合烤網金屬線，將熱傳遞由低效空氣對流轉為高效固體接觸熱傳導，讓花莖與花球同速率均勻熟化。
+            </p>
+          </div>
+
+          <div class="broccoli-step-card">
+            <div class="broccoli-step-title"><i class="fa-solid fa-wind"></i> 2. 離心甩水與油脂保護膜</div>
+            <p style="font-size: 0.9rem; color: var(--charcoal-sub);">
+              <strong>核心原理：</strong>洗淨後以蔬菜脫水機高速甩乾花蕾間隙殘留自由水！隨後立即澆淋冷壓植物油並用手充分抓勻，在微細花球表面形成均勻疏水油脂被膜。油脂沸點（>200°C）遠高於水，阻擋細密花苞因水分快速蒸氣化而脆化乾焦。
+            </p>
+          </div>
+
+          <div class="broccoli-step-card">
+            <div class="broccoli-step-title"><i class="fa-solid fa-fire"></i> 3. 兩段式火候：先烙印後低溫燜</div>
+            <p style="font-size: 0.9rem; color: var(--charcoal-sub);">
+              <strong>操作 SOP：</strong>將平切面朝下，置於直火高溫區（200°C）烙烤 90-120 秒，誘發梅納褐變焦脆烙痕；隨後移至弱火保溫區，加蓋不鏽鋼碗或鋁箔盒罩住 2 分鐘，利用上升熱空氣在小空間內回流燜蒸，使花莖完全軟化甜潤。
+            </p>
+          </div>
+
+          <div class="broccoli-step-card">
+            <div class="broccoli-step-title"><i class="fa-solid fa-vial-circle-check"></i> 4. 葉綠素脫鎂反應（Pheophytin）化學防線</div>
+            <p style="font-size: 0.9rem; color: var(--charcoal-sub);">
+              <strong>主廚化學鐵律：</strong><span style="color: #a82d2a; font-weight: 700;">出爐裝盤前，嚴禁刷上任何含檸檬汁、食醋之酸性醬汁！</span><br>
+              葉綠素中心為鎂離子（Mg²⁺）。高溫環境遭遇酸性物質，鎂離子會迅速脫出轉化為暗沉灰褐色的脫鎂葉綠素，令菜色盡失鮮綠且生苦味。待完全烤好移出烤架、降溫至 50°C 以下，方可滴上現擠檸檬汁提亮果香！
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         模組 2：九大無五辛純素特調烤肉醬（新增文旦鮮柚甘露醬）
+         ========================================================================== -->
+    <section id="module-sauces" class="module-section" style="scroll-margin-top: 60px;">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">MODULE 02 / EXQUISITE ALLIUM-FREE CRAFT SAUCES</span>
+        <h2 class="section-title">九大無五辛純素特調烤肉醬</h2>
+        <p class="section-desc">
+          完全剔除蔥、蒜、韭、薤、洋蔥等五辛分子。以昆布游離麩胺酸、日式赤白味噌胜肽類黑素、
+          中秋當季文旦柚檸檬烯精油、天然紫菜多醣、香茅醛與天然水梨果糖，構築層次深邃宏大的無五辛呈味結構。
+        </p>
+      </div>
+
+      <div class="sauce-grid">
+
+        <!-- 醬料 1：日式甘口昆布甘露照燒醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar">
+            <span class="sauce-index-num">01</span>
+            <span class="badge badge-forest" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-sparkles"></i> 經典鏡面甘露
+            </span>
+            <h3 class="sauce-title">日式甘口昆布甘露照燒醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-gold">甘鮮</span>
+              <span class="badge badge-forest">高光澤</span>
+              <span class="badge badge-dark">無五辛照燒</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>食材 8 分熟時第一次刷塗，翻面微收汁後起鍋前 30 秒補刷第二層。耐中大火快速梅納焦糖化。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                真昆布在 60-65°C 萃取出大量游離麩胺酸（L-Glutamate），與純釀造醬油氨基酸交疊產生鮮味相乘；
+                米麥芽糖（水飴）長鏈多醣網狀結構在高溫下黏度平緩下降，於食材表面形成高反光鏡面薄膜（Mirror Glaze），鎖水並提供高雅圓潤甘甜。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 350g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>北海道利尻/真昆布高湯</td><td class="amount">150 ml</td><td>昆布 10g 冷水浸泡 8 小時後微火煮至 65°C 取湯</td></tr>
+                    <tr><td>純釀造無添加非基改醬油</td><td class="amount">80 ml</td><td>黑豆醬油或丸大豆純釀（無酒精添加款最佳）</td></tr>
+                    <tr><td>純素無五辛味醂 (Mirin)</td><td class="amount">60 ml</td><td>純米發酵甜糯酒液（提供柔和酯香與去生味）</td></tr>
+                    <tr><td>米麥芽糖 (水飴)</td><td class="amount">40 g</td><td>提供光澤度與高溫黏稠包覆力</td></tr>
+                    <tr><td>三溫糖 / 原色二砂</td><td class="amount">15 g</td><td>增加焦糖化前驅物與溫潤炭焙甜香</td></tr>
+                    <tr><td>新鮮老薑汁 (濾渣)</td><td class="amount">5 ml</td><td>微量去大豆生腥味，增添尾韻清爽辛香</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>材料入厚底鍋，小火攪拌至麥芽糖完全溶解，慢火微滾濃縮至原體積 75%，出現細密小氣泡時離火冷卻。冷卻後黏稠度恰可掛在刷毛上不輕易滴落。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 2：美式經典煙燻黑糖番茄 BBQ 醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar american">
+            <span class="sauce-index-num">02</span>
+            <span class="badge badge-gold" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-fire-smoke"></i> 煙燻狂放風味
+            </span>
+            <h3 class="sauce-title">美式經典煙燻黑糖番茄 BBQ 醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-dark">濃郁煙燻</span>
+              <span class="badge badge-gold">酸甜平衡</span>
+              <span class="badge badge-forest">果酸亮脆</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>耐中小火（140-160°C）。食材 7 分熟時厚刷，最後 3 分鐘反覆翻烤使黑糖蜜與番茄糊焦糖化。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                雙倍濃縮純番茄糊富含天然檸檬酸與蘋果酸，能中和大豆製品油膩感；
+                精選西班牙橡木冷煙燻製之煙燻紅椒粉釋放癒創木酚（Guaiacol）與丁香酚香氣，模擬傳統原木柴燻肉香；黑糖蜜在高溫下產生活潑熱降解焦糖香。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 360g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>雙倍濃縮純番茄糊 (無五辛)</td><td class="amount">120 g</td><td>番茄風味厚度核心（非市售含大蒜番茄醬）</td></tr>
+                    <tr><td>天然純釀蘋果醋 (5%酸度)</td><td class="amount">60 ml</td><td>有機酸亮化整體結構，拉長風味尾韻</td></tr>
+                    <tr><td>未精製深色黑糖蜜 (Molasses)</td><td class="amount">50 g</td><td>提供深褐光澤、豐富礦物質與微苦焦糖層次</td></tr>
+                    <tr><td>純楓糖漿 (Grade A Dark)</td><td class="amount">30 ml</td><td>增添木質調芬多精甘甜香氣</td></tr>
+                    <tr><td>西班牙煙燻紅椒粉 (Dulce)</td><td class="amount">8 g</td><td>提供天然木炭煙燻酚類與溫潤鮮紅成色</td></tr>
+                    <tr><td>純素芥末籽醬 (無大蒜款)</td><td class="amount">20 g</td><td>微細芥末苷在口中破裂，帶來清爽微辛刺激</td></tr>
+                    <tr><td>海鹽與現磨黑胡椒碎</td><td class="amount">5 g / 3 g</td><td>調和礦物鹹度與胡椒鹼溫熱感</td></tr>
+                    <tr><td>過濾冷開水</td><td class="amount">60 ml</td><td>稀釋調配濃度至流暢刷塗質地</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>番茄糊入鍋微火乾煸 2 分鐘釋放脂溶性香氣，下水、黑糖蜜、蘋果醋煮勻 5 分鐘，離火拌入煙燻紅椒粉與芥末籽醬，封罐靜置熟成 2 小時風味更融合。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 3：南洋濃醇金沙花生沙嗲醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar satay">
+            <span class="sauce-index-num">03</span>
+            <span class="badge badge-gold" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-crown"></i> 串烤極致濃醇
+            </span>
+            <h3 class="sauce-title">南洋濃醇金沙花生沙嗲醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-gold">厚重油脂</span>
+              <span class="badge badge-forest">乳化甘潤</span>
+              <span class="badge badge-dark">薑酮香氣</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>微火區（120-140°C）或出爐餘溫刷覆。油脂固形物高，嚴禁置於直火高溫區防烈焰竄燒。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                粗粒純花生醬的游離脂肪酸，與濃椰漿在熱力擾動下達成微胞乳化（Micellar Emulsification），構築出綿密油脂護膜；
+                低溫炒製薑黃粉（Curcumin）與嫩薑蓉，經油脂熱激發釋放高揮發性薑酮（Zingerone）與薑烯，穿透力十足。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 380g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>100% 無糖顆粒純花生醬</td><td class="amount">120 g</td><td>帶細碎花生顆粒款，烤後提供堅果咬感</td></tr>
+                    <tr><td>特濃冷壓純椰漿 (脂含量>20%)</td><td class="amount">140 ml</td><td>提供豐富月桂酸油脂乳化與厚重椰香</td></tr>
+                    <tr><td>純椰糖 (Palm Sugar) 或二砂</td><td class="amount">35 g</td><td>南洋傳統焦糖基底，低 GI 自帶煙燻椰蜜香</td></tr>
+                    <tr><td>新鮮嫩薑極細泥</td><td class="amount">15 g</td><td>取代傳統蒜頭，提供乾淨優雅辛辣層次</td></tr>
+                    <tr><td>天然高純度薑黃粉 + 芫荽子粉</td><td class="amount">4 g / 3 g</td><td>賦予亮黃金沙成色與柑橘木質調底韻</td></tr>
+                    <tr><td>純釀無五辛白醬油 / 淡色醬油</td><td class="amount">25 ml</td><td>補充鈉離子平衡，提升堅果鮮甜度</td></tr>
+                    <tr><td>初榨冷壓椰子油 (炒香用)</td><td class="amount">15 ml</td><td>熱激發辛香料脂溶性香氣分子之介質</td></tr>
+                    <tr><td>現擠新鮮檸檬汁</td><td class="amount">15 ml</td><td>起鍋後調入，果酸切割油脂厚重感</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>椰子油微火爆香薑泥、薑黃與芫荽粉 40 秒，倒入椰漿與椰糖煮至微沸，下花生醬與白醬油，打蛋器持續攪打至緞帶濃稠狀，離火滴入檸檬汁。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 4：川味紅油赤味噌椒麻刷醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar sichuan">
+            <span class="sauce-index-num">04</span>
+            <span class="badge badge-dark" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-pepper-hot"></i> 穿透麻辣過癮
+            </span>
+            <h3 class="sauce-title">川味紅油赤味噌椒麻刷醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-dark">長期熟成</span>
+              <span class="badge badge-gold">胜肽厚度</span>
+              <span class="badge badge-forest">羥基山椒素</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>中火區（160-180°C）刷塗。耐熱度極佳，大豆胜肽經火烤後爆發炭烤剛烈香氣。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                長期熟成的赤味噌富含類黑素（Melanoidin）與大豆短胜肽，鮮味深邃且耐熱；
+                結合大紅袍與青花椒之羥基-α-山椒素（Hydroxy-α-sanshool），刺激三叉神經產生 50Hz 物理性微震顫麻感，紅亮濃香。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 340g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>日本長野熟成赤味噌 (八丁/仙台)</td><td class="amount">90 g</td><td>鮮味骨架核心，富含大豆發酵濃縮鮮味胜肽</td></tr>
+                    <tr><td>手作無五辛川味花椒紅油</td><td class="amount">45 ml</td><td>大紅袍+青花椒+菜籽油低溫慢煉之紅油</td></tr>
+                    <tr><td>純釀厚黑豆醬油</td><td class="amount">35 ml</td><td>提供醬香深度與焦糖化所需還原糖</td></tr>
+                    <tr><td>純素無五辛糯米香醋</td><td class="amount">25 ml</td><td>提供柔和醋酸，收斂花椒過強麻木感</td></tr>
+                    <tr><td>二溫糖或熟成冰糖粉</td><td class="amount">35 g</td><td>平衡赤味噌較高鹹度，軟化麻辣刺激角質</td></tr>
+                    <tr><td>純白芝麻醬 (冷水化開)</td><td class="amount">30 g</td><td>提供堅果香氣與增稠附著力</td></tr>
+                    <tr><td>昆布蔬菜高湯</td><td class="amount">75 ml</td><td>化解赤味噌高濃稠度，形成細膩刷覆質地</td></tr>
+                    <tr><td>現研磨青花椒細粉</td><td class="amount">4 g</td><td>起鍋後撒入，保留最頂級之青檸麻香</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>赤味噌與芝麻醬以溫高湯研磨乳化至無顆粒；轉入鍋中加入黑豆醬油、糖、香醋滾煮 2 分鐘，離火攪打拌入花椒紅油與青花椒粉成光亮稠醬。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 5：韓式水梨發酵甜辣刷醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar korean">
+            <span class="sauce-index-num">05</span>
+            <span class="badge badge-forest" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-apple-whole"></i> 天然果糖酵素
+            </span>
+            <h3 class="sauce-title">韓式水梨發酵甜辣刷醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-gold">水梨果甜</span>
+              <span class="badge badge-forest">低溫焦糖</span>
+              <span class="badge badge-dark">白味噌溫潤</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>起鍋前最後 2 分鐘末段薄刷。水梨果糖焦糖化溫度僅 105-110°C，需在弱火區快速翻動。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                新鮮水梨細泥富含天然蛋白質分解酵素與高活性果糖，果糖在 105°C 即開始焦糖化褐變。搭配白味噌的米麴多醣與日曬粗辣椒粉，入口果香沁甜、繼而微辣回甘。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 360g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>新鮮水梨細泥 (連同天然果汁)</td><td class="amount">130 g</td><td>現磨取其活性酵素與水潤清甜果香</td></tr>
+                    <tr><td>純素無五辛韓式粗紅辣椒粉 (Gochugaru)</td><td class="amount">30 g</td><td>低溫乾燥日曬辣椒，色紅豔、香氣足、辣度溫和</td></tr>
+                    <tr><td>京都甘口白味噌 (米麴味噌)</td><td class="amount">60 g</td><td>取代傳統含蒜辣醬，提供米麴甘甜乳化體</td></tr>
+                    <tr><td>糙米甘酒 (米麴發酵液) 或純麥芽糖</td><td class="amount">35 g</td><td>天然米麴轉化葡萄糖，帶來柔美發酵尾韻</td></tr>
+                    <tr><td>特級冷壓純黑芝麻油</td><td class="amount">25 ml</td><td>韓風靈魂所在，豐富芝麻酚帶來炭焙堅果香</td></tr>
+                    <tr><td>純釀造薄鹽黑豆醬油</td><td class="amount">30 ml</td><td>提供穩固的鹹鮮味基礎骨骼</td></tr>
+                    <tr><td>新鮮老薑汁 + 熟白芝麻粒</td><td class="amount">8 ml / 10 g</td><td>微辛薑香提振果味，熟芝麻粒豐富咀嚼香氣</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>水梨泥與白味噌、醬油、甘酒攪拌均勻，拌入辣椒粉吸收膨脹 10 分鐘，加入黑芝麻油、老薑汁與炒香白芝麻攪打乳化。冷藏 1 小時後果糖與辣椒充分交融。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 6：台式經典炭烤素沙茶甘醇醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar shacha">
+            <span class="sauce-index-num">06</span>
+            <span class="badge badge-gold" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-fire"></i> 台味炭烤靈魂
+            </span>
+            <h3 class="sauce-title">台式經典炭烤素沙茶甘醇醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-dark">紫菜多醣</span>
+              <span class="badge badge-gold">香菇柄纖維</span>
+              <span class="badge badge-forest">黑豆蔭油膏</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>中火區（160°C）。食材七分熟時雙面厚刷烤至起泡發亮，是素米血、麵腸與豆干的絕配。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                精選特級紫菜鮮味多醣與慢火烘焙之乾燥香菇柄細微纖維，構建出深具顆粒感的濃郁底韻；
+                結合天然糯米調和之黑豆蔭油膏，提供高溫耐受性極強的黏性護膜；純素烏醋的天然果酸與熟白芝麻粉在高溫炭火熱力激發下，爆發出濃郁撲鼻的經典台式夜市烤肉香。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 245g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>優質無五辛素沙茶醬</td><td class="amount">90 g</td><td>以香菇、黃豆、芝麻為基底之純素沙茶醬</td></tr>
+                    <tr><td>純釀黑豆蔭油膏 (西螺古法)</td><td class="amount">60 ml</td><td>提供厚重醬色與糯米糊化稠度</td></tr>
+                    <tr><td>純素釀造烏醋 (無五辛)</td><td class="amount">20 ml</td><td>酸度柔和，去大豆生油膩感</td></tr>
+                    <tr><td>新鮮老薑細泥 (連汁)</td><td class="amount">15 g</td><td>提供穿透性溫暖辛香，提振香菇海苔鮮度</td></tr>
+                    <tr><td>低溫烘焙熟白芝麻粉</td><td class="amount">15 g</td><td>油脂乳化顆粒，烤後散發堅果濃香</td></tr>
+                    <tr><td>過濾冷開水</td><td class="amount">40 ml</td><td>調節稠度至利於毛刷吸附並延展</td></tr>
+                    <tr><td>頂級純白胡椒粉</td><td class="amount">3 g</td><td>增添經典台式炭烤尾韻微辛刺激</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>將素沙茶醬與老薑泥、白芝麻粉於碗中充分研磨混合；加入黑豆蔭油膏與水拌勻，最後滴入純素烏醋與白胡椒粉以打蛋器快速順時針攪打乳化均勻，靜置 20 分鐘釋放香氣。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 7：地中海檸檬迷迭香初榨香草油醋 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar mediterranean">
+            <span class="sauce-index-num">07</span>
+            <span class="badge badge-forest" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-seedling"></i> 草本清雅芳醇
+            </span>
+            <h3 class="sauce-title">地中海檸檬迷迭香初榨香草油醋</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-forest">特級初榨</span>
+              <span class="badge badge-gold">迷迭香酸</span>
+              <span class="badge badge-dark">百里香酚</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>弱火保溫區微溫刷覆，或出爐後立即淋上。保留初榨橄欖油多酚與新鮮草本揮發油活性。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                特級初榨冷壓橄欖油富含油酸（Oleic Acid）單元不飽和脂肪酸，能完美萃取溶解迷迭香中的迷迭香酸（Rosmarinic acid）與百里香酚（Thymol）；
+                高有機酸新鮮檸檬汁在食材表面形成防氧化屏障，高溫下有效延緩植物組織褐化，帶來清新爽脆的地中海陽光氣息。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 200g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>特級初榨冷壓橄欖油 (EVOO)</td><td class="amount">120 ml</td><td>酸價 < 0.3%，富含橄欖多酚與青草香氣</td></tr>
+                    <tr><td>新鮮現擠黃檸檬汁 (濾籽)</td><td class="amount">45 ml</td><td>天然檸檬酸提亮整體草本油醋高音</td></tr>
+                    <tr><td>新鮮迷迭香嫩葉極細碎</td><td class="amount">5 g</td><td>木質松香香氣分子，高溫烘烤香氣四溢</td></tr>
+                    <tr><td>乾燥百里香碎 (Thyme)</td><td class="amount">2 g</td><td>增添地中海野性草本複雜層次</td></tr>
+                    <tr><td>純楓糖漿 (Grade A Amber)</td><td class="amount">15 ml</td><td>柔化檸檬尖銳酸度，提供溫潤甜度介質</td></tr>
+                    <tr><td>研磨天然海鹽片</td><td class="amount">4 g</td><td>礦物鹹度結晶，刺激味蕾分泌唾液</td></tr>
+                    <tr><td>現磨特級黑胡椒碎</td><td class="amount">3 g</td><td>現磨胡椒油香氣，增添微熱咬感</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>將切碎的迷迭香與百里香置於碗底，以海鹽摩擦釋放精油；加入檸檬汁與楓糖漿拌融，隨後呈細絲狀緩緩注入初榨橄欖油，以手持迷你打蛋器高速攪打至呈半乳化金綠色懸浮液。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 8：泰式青檸芫荽香茅酸辣沾刷醬 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar thai">
+            <span class="sauce-index-num">08</span>
+            <span class="badge badge-forest" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-lemon"></i> 醒蕾跳躍酸辣
+            </span>
+            <h3 class="sauce-title">泰式青檸芫荽香茅酸辣沾刷醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-forest">香茅醛</span>
+              <span class="badge badge-dark">芫荽根精華</span>
+              <span class="badge badge-gold">椰糖回甘</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>作為起鍋後佐餐沾醬，或起鍋前最後 30 秒高溫掠火刷塗，瞬間激發香茅與芫荽熱精油。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                新鮮香茅嫩莖釋放高純度香茅醛（Citronellal）與檸檬醛，結合芫荽根部揮發油，帶來極具爆發力的熱帶辛香；
+                未精製椰糖漿的低 GI 焦糖分子溫柔包覆高酸度青檸檬汁，朝天椒素微量釋放刺激口腔三叉神經，帶來極度生津解膩的絕妙口感。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 180g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>新鮮無籽青檸檬原汁</td><td class="amount">50 ml</td><td>鮮榨未加熱，保留高活性維生素C與芳香油</td></tr>
+                    <tr><td>天然純椰糖漿 (熱水化開)</td><td class="amount">40 g</td><td>柔和煙燻焦糖甜感，平衡青檸強酸</td></tr>
+                    <tr><td>純釀無五辛薄色白醬油</td><td class="amount">35 ml</td><td>提供純淨鈉鹽基礎與琥珀色透光度</td></tr>
+                    <tr><td>新鮮香茅白色嫩莖極細末</td><td class="amount">15 g</td><td>僅取最嫩內芯切至極薄，香茅醛核心</td></tr>
+                    <tr><td>洗淨新鮮芫荽根末</td><td class="amount">10 g</td><td>芫荽香氣最濃郁部位，搗碎釋放草本精華</td></tr>
+                    <tr><td>新鮮朝天紅椒碎圈</td><td class="amount">5 g</td><td>提供鮮紅點綴與高穿透性瞬發辣度</td></tr>
+                    <tr><td>過濾冷開水</td><td class="amount">25 ml</td><td>調節整體酸甜平衡度與流動質地</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>將香茅嫩末、芫荽根末、紅椒圈置於石臼中用力舂搗 2 分鐘搗出精油泥；加入化開的椰糖漿與白醬油攪勻，最後倒入新鮮青檸原汁與過濾水拌勻，冷藏可保鮮 24 小時。
+            </div>
+          </div>
+        </div>
+
+        <!-- 醬料 9：中秋文旦鮮柚甘露薄鹽醬【權威新增】 -->
+        <div class="sauce-card">
+          <div class="sauce-sidebar pomelo">
+            <span class="sauce-index-num">09</span>
+            <span class="badge badge-forest" style="align-self: flex-start; margin-bottom: 6px;">
+              <i class="fa-solid fa-citrus"></i> 低卡抗氧果香
+            </span>
+            <h3 class="sauce-title">中秋文旦鮮柚甘露薄鹽醬</h3>
+            <div class="sauce-flavor-profile">
+              <span class="badge badge-forest">檸檬烯果香</span>
+              <span class="badge badge-gold">文旦果膠</span>
+              <span class="badge badge-dark">低鈉清爽</span>
+            </div>
+            <div class="sauce-timing-tag">
+              <h5><i class="fa-solid fa-clock"></i> 最佳刷塗時機</h5>
+              <p>烤時蔬起鍋前 30 秒微溫薄刷，或直接盛小碟作為熟成串烤之沾醬。果香四溢解膩滿分。</p>
+            </div>
+          </div>
+          <div class="sauce-body">
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-flask"></i> 呈味原理與分子結構</div>
+              <p style="font-size: 0.93rem; color: var(--charcoal-sub);">
+                依據<strong>「優活健康網」</strong>低鈉高抗氧化中秋健康指引研製。新鮮文旦柚果肉富含天然水溶性果膠（Pectin）與維生素C，
+                柚皮揮發微滴釋放<strong>檸檬烯（D-Limonene）</strong>清香分子；與冷萃昆布水游離麩胺酸相溶，無須任何增稠劑即能形成自然掛壁之透亮甘露薄膜，鈉含量僅為傳統烤肉醬的 30%。
+              </p>
+            </div>
+
+            <div>
+              <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 232g）</div>
+              <div class="recipe-table-wrap">
+                <table class="recipe-table">
+                  <thead>
+                    <tr><th>原料名稱</th><th>精確份量 (g/ml)</th><th>調製與工藝備註</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>新鮮麻豆文旦柚果肉細碎 (含果汁)</td><td class="amount">100 g</td><td>去籽剝碎，保留完整細小汁胞增添咬感爆汁</td></tr>
+                    <tr><td>純釀無五辛薄色白醬油 / 淡醬油</td><td class="amount">40 ml</td><td>低鈉甘口，不遮蔽柚子清新淡雅果色</td></tr>
+                    <tr><td>純米本格味醂 (Mirin)</td><td class="amount">30 ml</td><td>天然米麴發酵葡萄糖，平衡文旦微苦柚皮苷</td></tr>
+                    <tr><td>真昆布冷萃浸出水</td><td class="amount">50 ml</td><td>提供清雅底層鮮味，稀釋調配流暢度</td></tr>
+                    <tr><td>新鮮鮮榨綠檸檬汁</td><td class="amount">10 ml</td><td>補足果酸銳度，防止文旦果肉氧化褐化</td></tr>
+                    <tr><td>研磨天然海鹽</td><td class="amount">2 g</td><td>微量鈉離子提升水果甜度感知</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-fire"></i> 調製工法：</strong>文旦果肉以叉子壓破 50% 汁胞釋出天然果膠，與冷萃昆布水、白醬油、味醂混合，以手持均質機或手動攪拌器低速微打勻（切勿過度攪打免生白色泡沫），最後拌入新鮮檸檬汁與海鹽，冷藏靜置 30 分鐘讓風味圓潤。
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         模組 3：高密度蛋白製品深層入味醃漬工法（天貝與豆干專用）
+         ========================================================================== -->
+    <section id="module-marinate" class="module-section" style="scroll-margin-top: 60px;">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">MODULE 03 / DEEP MARINATION THERMAL SIPHON SOP</span>
+        <h2 class="section-title">高密度蛋白製品深層入味醃漬工法</h2>
+        <p class="section-desc">
+          打破素料「外皮過鹹焦黑、內部毫無味道」之物理痛點。
+          藉由「幾何微切劃刀、95°C 沸騰膨脹脫氣、微負壓虹吸置換、滲透壓精密鎖定」四階段熱力學閉環，達成 100% 芯部深層入味。
+        </p>
+      </div>
+
+      <!-- 四大核心 SOP 步驟橫向卡片 -->
+      <div class="marinate-workflow">
+        <div class="step-card">
+          <span class="step-number">STEP 01</span>
+          <h4><i class="fa-solid fa-pen-ruler"></i> 物理改質與表面擴增</h4>
+          <p>
+            <strong>豆干工法：</strong>正面與反面均以刀刃傾斜 45 度，精確劃入深 2mm 的雙面交錯菱格刀紋。<br>
+            <strong>天貝工法：</strong>以不鏽鋼排針密集穿刺其緻密的白色幾丁質菌絲表面，打破氣密屏障，使深層大豆孔道暴露。
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">STEP 02</span>
+          <h4><i class="fa-solid fa-temperature-arrow-up"></i> 95°C 熱膨脹排除氣阻</h4>
+          <p>
+            入 95°C 微滾沸水（含 1% 鹽與薑片）汆燙 3-5 分鐘。
+            <strong>熱力學關鍵：</strong>高溫使孔隙內封閉冷空氣劇烈膨脹逸出，瓦解大豆腥味揮發性己醛，內部微細通道瞬間徹底開放。
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">STEP 03</span>
+          <h4><i class="fa-solid fa-compress"></i> 趁熱投入引發微負壓虹吸</h4>
+          <p>
+            將燙透、中心溫度仍高達 <strong>>65°C</strong> 的豆干/天貝夾出，立即投入 <strong>5-10°C 的冷醃漬液</strong>中！
+            食材孔隙熱縮造成瞬時「微負壓真空效應（Vacuum Thermal Siphon）」，像注射針筒般強行將醃液抽入製品核心。
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-number">STEP 04</span>
+          <h4><i class="fa-solid fa-scale-unbalanced"></i> 滲透壓平衡 (2.5 - 4.0%)</h4>
+          <p>
+            調控醃液總鹽度精準落在 <strong>2.8% - 3.5%</strong> 黃金區間。
+            若鹽度大於 5%，大豆蛋白會發生表面硬化（Case Hardening）閉合毛孔；唯有適度滲透壓，才能達成水分與鮮味分子之均勻雙向交換。
+          </p>
+        </div>
+      </div>
+
+      <!-- 熱力學公式橫幅 -->
+      <div class="formula-banner">
+        <div>
+          <h4 style="font-size: 1.15rem; margin-bottom: 4px; color: #ffd992;"><i class="fa-solid fa-atom"></i> 熱膨脹虹吸置換公式</h4>
+          <p style="font-size: 0.88rem; color: #d6e8dd;">孔隙微負壓差 ΔP = nR(T_hot - T_cold) / V ，趁熱冷浸造成體積瞬時收縮，達成常壓下 4 倍深度滲透速率。</p>
+        </div>
+        <div class="formula-code">ΔP ∝ (T_core - T_liquid) | Salt: 2.8% ~ 3.5%</div>
+      </div>
+
+      <!-- 兩大專用浸泡配方 -->
+      <div class="marinade-recipes-grid">
+        <!-- 配方 A：天貝專用米酒薑汁昆布漬液 -->
+        <div class="marinade-recipe-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <h4 style="font-size: 1.2rem; color: var(--primary-forest);"><i class="fa-solid fa-cubes"></i> 天貝專用：米酒薑汁昆布冷漬液</h4>
+            <span class="badge badge-forest">去酸發酵轉甘</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--charcoal-sub); margin-bottom: 12px;">
+            天貝天然自帶發酵微酸味與發酵大豆氣味。此配方利用米酒的乙醇分子與昆布甘露，轉化酸澀為優雅堅果清香。
+          </p>
+          <table class="recipe-table">
+            <thead>
+              <tr><th>成分名稱</th><th>精準克數</th><th>功能說明</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>濃縮昆布高湯</td><td class="amount">250 ml</td><td>游離麩胺酸載體，深層鮮味骨幹</td></tr>
+              <tr><td>純素料理純米酒</td><td class="amount">50 ml</td><td>小分子醇類穿透去發酵酸氣</td></tr>
+              <tr><td>非基改純釀醬油</td><td class="amount">40 ml</td><td>維持鹽度平衡在 3.0% 滲透溫區</td></tr>
+              <tr><td>老薑壓榨原汁</td><td class="amount">15 ml</td><td>薑辣素中和天貝微苦尾韻</td></tr>
+              <tr><td>冷壓純黑芝麻油</td><td class="amount">10 ml</td><td>形成微脂膜，防止烤時天貝失水</td></tr>
+              <tr><td>浸漬建議時間</td><td class="amount">40 - 60 分鐘</td><td>熱投後冷藏浸漬，免過夜即徹底入味</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 配方 B：五香厚豆干專用鮮味八角浸出液 -->
+        <div class="marinade-recipe-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <h4 style="font-size: 1.2rem; color: var(--caramel-wood);"><i class="fa-solid fa-cube"></i> 厚豆干專用：鮮味八角甘草浸出液</h4>
+            <span class="badge badge-gold">厚重草本醬香</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--charcoal-sub); margin-bottom: 12px;">
+            專攻厚度超過 2.5cm 之五香大豆干。甘草甜素與八角茴香腦（Anethole）能與大豆蛋白緊密螯合，烤後肉感十足。
+          </p>
+          <table class="recipe-table">
+            <thead>
+              <tr><th>成分名稱</th><th>精準克數</th><th>功能說明</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>過濾水 / 乾香菇浸泡高湯</td><td class="amount">280 ml</td><td>香菇鳥苷酸鮮味介質</td></tr>
+              <tr><td>傳統五香釀造醬油</td><td class="amount">50 ml</td><td>提供深層醬色與鈉離子滲透壓</td></tr>
+              <tr><td>原枝大紅八角 (碾碎)</td><td class="amount">2 顆 (約3g)</td><td>釋放茴香腦，強化天然五香深厚氣韻</td></tr>
+              <tr><td>炙甘草片 / 二砂</td><td class="amount">3 片 / 15 g</td><td>天然甘草甜素，回甘悠長不生膩</td></tr>
+              <tr><td>整粒白胡椒粒 (拍裂)</td><td class="amount">2 g</td><td>溫潤胡椒香氣直通豆干中心孔道</td></tr>
+              <tr><td>浸漬建議時間</td><td class="amount">30 - 45 分鐘</td><td>煮滾放涼至 15°C，熱豆干投入吸汁</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         模組 4：金牌串烤風味搭配指南（黃金組合 5 組 + 炭火尾韻純素甜點專區）
+         ========================================================================== -->
+    <section id="module-skewers" class="module-section" style="scroll-margin-top: 60px;">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">MODULE 04 / MASTER SKEWER FLAVOR MATRIX</span>
+        <h2 class="section-title">金牌串烤風味搭配指南</h2>
+        <p class="section-desc">
+          絕非隨機穿串！竹籤串烤本質是一場「熱傳導平衡幾何學」。
+          受熱速率不同之食材必須透過厚度補償與幾何順序協調，搭配專屬特調刷醬，達成一口咬下的立體爆汁高潮。
+        </p>
+      </div>
+
+      <div class="skewer-grid">
+        
+        <!-- 組合 A -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 A</span>
+            <span class="badge badge-gold"><i class="fa-solid fa-fire"></i> 南洋野性風</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              脆汁櫛瓜 × 酥香天貝 × 脆甜彩椒
+            </h3>
+            
+            <div class="skewer-sequence">
+              <span class="skewer-node">彩椒 (3cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">醃天貝 (1.5cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">綠櫛瓜 (8mm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">醃天貝 (1.5cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">彩椒 (3cm)</span>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>03 號 南洋濃醇金沙花生沙嗲醬<br>
+              <strong>受熱速率一致性設計：</strong>天貝已預先深層入味熟化，僅需表面高溫梅納；而櫛瓜與彩椒升溫曲線幾乎完全同步（約 4-5 分鐘）。彩椒兩側包夾作為幾何熱護盾，保護天貝不致直火碳化，沙嗲油脂順帶滋潤櫛瓜。
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>外層彩椒鮮脆爆汁 → 咬進天貝如堅果脆皮之厚實嚼勁 → 終端綠櫛瓜如絲絹融化之清甜甘露。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 B -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 B</span>
+            <span class="badge badge-forest"><i class="fa-solid fa-fire"></i> 日式居酒屋風</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              五香厚豆干 × 彈牙杏鮑菇 × 蜜烤金鑽鳳梨
+            </h3>
+            
+            <div class="skewer-sequence">
+              <span class="skewer-node">厚豆干 (2cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">杏鮑菇 (2cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">金鑽鳳梨 (2cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">杏鮑菇 (2cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">厚豆干 (2cm)</span>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>01 號 日式甘口昆布甘露照燒醬<br>
+              <strong>受熱速率一致性設計：</strong>厚豆干與杏鮑菇皆屬高密度低導熱結構，厚度統一為 2.0cm 立方體；中央穿入鳳梨塊，果糖焦糖化釋放之蛋白酶氣霧軟化兩側豆干表面蛋白，帶來極致酸甜多汁對比。
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>照燒鏡面鹹香焦脆 → 杏鮑菇鮑魚般彈韌口感 → 鳳梨滾燙酸甜果汁奔流解膩。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 C -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 C</span>
+            <span class="badge badge-gold"><i class="fa-solid fa-fire"></i> 首爾街頭熱力風</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              素甜不辣 × 脆甜茭白筍 × 綿潤紫茄
+            </h3>
+            
+            <div class="skewer-sequence">
+              <span class="skewer-node">素甜不辣 (厚條)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">茭白筍 (2.5cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">紫茄 (12mm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">素甜不辣 (厚條)</span>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>05 號 韓式水梨發酵甜辣刷醬<br>
+              <strong>受熱速率一致性設計：</strong>甜不辣高溫膨脹起泡，茄子吸收甜不辣表面油香，茭白筍提供穩固硬質支撐防止茄子旋轉鬆脫；末段薄刷水梨醬，利用高溫快速定型出迷人微焦紅光澤。
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>外皮起泡酥糯 Q 彈 → 茭白筍潔淨細緻清脆 → 紫茄綿密化汁濃郁醬香。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 D【台味夜市碳香串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 D</span>
+            <span class="badge badge-gold" style="background:#b23a22; color:#fff;"><i class="fa-solid fa-fire"></i> 台味夜市碳香串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              純素紫米糕 × 綠糯米椒 × 鮮採猴頭菇
+            </h3>
+            
+            <div class="skewer-sequence">
+              <span class="skewer-node">紫米糕 (2cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">糯米椒 (帶蒂)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">猴頭菇 (2.5cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">糯米椒 (帶蒂)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">紫米糕 (2cm)</span>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>06 號 台式經典炭烤素沙茶甘醇醬<br>
+              <strong>受熱速率一致性設計：</strong>紫米糕兩側刷油後在中溫慢火下支鏈澱粉軟化，外層微脆焦化；中央猴頭菇菌絲飽含高湯熱蒸氣，糯米椒作為天然果酸與清脆咬感緩衝，沙茶醬的紫菜多醣與黑豆蔭油完美烘托出如夜市炭烤攤般令人魂牽夢縈的霸道香氣。
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>外酥內糯彈牙米香 → 糯米椒爽脆多汁甘甜 → 猴頭菇絲絲入扣如牛排般厚實嚼勁。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 E【鮮脆千層養生串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 E</span>
+            <span class="badge badge-forest" style="background:#2d6a4f; color:#fff;"><i class="fa-solid fa-leaf"></i> 鮮脆千層養生串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              腐皮綠蘆筍捲 × 彩色小番茄 × 甜脆四季豆
+            </h3>
+            
+            <div class="skewer-sequence">
+              <span class="skewer-node">小番茄 (顆)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">腐皮蘆筍捲 (段)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">四季豆 (並排)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">腐皮蘆筍捲 (段)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">小番茄 (顆)</span>
+            </div>
+
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>09 號 中秋文旦鮮柚甘露薄鹽醬 或 07 號 香草油醋<br>
+              <strong>受熱速率一致性設計：</strong>腐皮外酥內嫩自蒸，小番茄經微扎孔受熱果皮微皺爆汁，四季豆中火快速封油保持翠綠；搭配文旦柚檸檬烯果香甘露，高抗氧化低鈉，帶來如同晨露般無比清爽之頂級享受。
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>外層千層腐皮極致酥脆 → 咬開小番茄滾燙酸甜果汁飛濺 → 綠蘆筍與四季豆爽脆回甘。
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 炭火尾韻純素甜品專區【新增】 -->
+      <div class="dessert-featured-section" id="dessert-section">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 2px solid rgba(212, 149, 90, 0.3); padding-bottom: 12px;">
+          <div>
+            <span class="badge badge-gold"><i class="fa-solid fa-wand-magic-sparkles"></i> 完美宴席終曲</span>
+            <h3 style="font-size: 1.55rem; color: #8c532b; margin-top: 6px;">炭火尾韻純素甜品專區：熱力學火候與操作指南</h3>
+          </div>
+          <span class="badge badge-dark" style="background: #8c532b;">低溫餘溫溫區 (100-120°C)</span>
+        </div>
+
+        <p style="margin-top: 14px; font-size: 0.96rem; color: var(--charcoal-sub); line-height: 1.8;">
+          烤肉盛宴的最高潮，在於炭火漸熄、木炭表面覆蓋銀白薄灰時的「微溫餘熱」。
+          利用此溫區柔和均勻的遠紅外線熱輻射，慢烤純素麻糬、巧克力香蕉與海藻膠棉花糖，為味蕾畫下最溫暖療癒的句點。
+        </p>
+
+        <div class="dessert-grid">
+          <!-- 甜點 1 -->
+          <div class="dessert-card">
+            <h4><i class="fa-solid fa-cubes"></i> 1. 日式純素烤麻糬 (Vegan Kirimochi)</h4>
+            <p style="font-size: 0.88rem; color: var(--charcoal-sub); line-height: 1.6;">
+              <strong>熱力學原理：</strong>純糯米日式麻糬水分約 40%，置於 Zone 3 弱火區（100-120°C）並<strong>每隔 30 秒頻繁翻動</strong>。
+              當內部核心達 80°C 時，支鏈澱粉劇烈糊化且內部水蒸氣壓急速升高，外皮會如氣球般向外立體「枕頭狀膨起（Puffing）」，表面形成薄脆金黃米香脆殼。出爐趁熱浸沾純楓糖漿或黑糖蜜，隨即滾上一層厚厚之無糖現磨花生粉與熟黃豆粉，外脆內拉絲！
+            </p>
+          </div>
+
+          <!-- 甜點 2 -->
+          <div class="dessert-card">
+            <h4><i class="fa-solid fa-banana"></i> 2. 肉桂黑巧克力烤香蕉 (Campfire Choco-Banana)</h4>
+            <p style="font-size: 0.88rem; color: var(--charcoal-sub); line-height: 1.6;">
+              <strong>熱力學原理：</strong>選用熟成帶微斑點香蕉，<strong>保留香蕉皮</strong>，沿內弧面縱切一刀（切透果肉但不可切斷底層果皮）。
+              填入 75% 純素無奶黑巧克力磚碎塊與有機肉桂粉，外層以雙層鋁箔紙嚴密包裹，置於炭火旁悶烤 8-10 分鐘。香蕉果糖在 90°C 下融化為天然果醬，可可脂完全乳化，撕開鋁箔以湯匙挖食，濃郁溫熱苦甜如頂級法式熔岩蛋糕。
+            </p>
+          </div>
+
+          <!-- 甜點 3 -->
+          <div class="dessert-card">
+            <h4><i class="fa-solid fa-cloud"></i> 3. 純素無明膠棉花糖 (Vegan Marshmallow)</h4>
+            <p style="font-size: 0.88rem; color: var(--charcoal-sub); line-height: 1.6;">
+              <strong>熱力學原理：</strong>無動物明膠之純素棉花糖由木薯澱粉、海藻多醣（Carrageenan）與大豆蛋白起泡製成。
+              其熔點較動物膠棉花糖低約 15°C，<strong>嚴禁直接靠近火苗</strong>！必須穿於長竹籤上，置於炭火上方 15cm 處「高速勻速自轉」，利用上升熱空氣使外層糖霜在 60 秒內焦糖化為淡金黃脆殼，內部達到溫潤流心半融態即刻享用。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         模組 5：燒烤火候配置與常見失敗救援指南
+         ========================================================================== -->
+    <section id="module-heat-guide" class="module-section" style="scroll-margin-top: 60px;">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">MODULE 05 / THERMAL CONFIGURATION & EMERGENCY RESCUE</span>
+        <h2 class="section-title">燒烤火候配置與常見失敗救援指南</h2>
+        <p class="section-desc">
+          「單一火區，必敗無疑。」專業燒烤師的核心機密在於炭爐的「空間熱力學劃分」。
+          唯有掌握直火、間接熱與保溫三區連動，搭配物理防禦道具，方能百戰百勝。
+        </p>
+      </div>
+
+      <!-- 三區炭火藍圖可視化區域 -->
+      <div class="fire-zones-diagram">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 14px;">
+          <div>
+            <span class="badge badge-dark" style="border: 1px solid #ff7656; color: #ffd992;"><i class="fa-solid fa-compass-drafting"></i> 專業炭爐空間架構</span>
+            <h3 style="font-size: 1.45rem; color: #fff; margin-top: 6px;">三區炭火熱力分佈圖 (Three-Zone Fire Setup)</h3>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.88rem; color: #bbb;">木炭梯形堆疊法 / Slope Charcoal Distribution</span>
+        </div>
+
+        <div class="zones-grid">
+          <!-- 區 1 -->
+          <div class="zone-column hot">
+            <span class="badge badge-dark" style="background:#d9381e; color:#fff; align-self: flex-start;">ZONE 1</span>
+            <h4 style="font-size: 1.2rem; color: #fff; margin-top: 8px;">直火高溫區 (Direct Sear)</h4>
+            <div class="zone-temp">220°C - 250°C</div>
+            <p style="font-size: 0.86rem; color: #ddd; line-height: 1.6;">
+              <strong>木炭排布：</strong>雙層木炭密實堆疊，炭火呈熾白無煙微火苗狀態。<br>
+              <strong>適用任務：</strong>食材初入爐急速烙烤梅納烤痕（Sear Marks）、青花菜平切面脆化、彩椒皮快速碳化香氣。<br>
+              <strong>滯留時間：</strong>嚴禁超過 90-120 秒，需專人全神貫注翻動。
+            </p>
+          </div>
+
+          <!-- 區 2 -->
+          <div class="zone-column medium">
+            <span class="badge badge-dark" style="background:#d9821e; color:#fff; align-self: flex-start;">ZONE 2</span>
+            <h4 style="font-size: 1.2rem; color: #fff; margin-top: 8px;">中火慢烤區 (Roast & Cook)</h4>
+            <div class="zone-temp">160°C - 180°C</div>
+            <p style="font-size: 0.86rem; color: #ddd; line-height: 1.6;">
+              <strong>木炭排布：</strong>單層木炭平鋪，炭體微紅覆蓋薄灰。<br>
+              <strong>適用任務：</strong>天貝/豆干深層熟化熱滲透、厚片櫛瓜與日本圓茄軟化、刷塗日式照燒醬、素沙茶與赤味噌醬慢烤焦糖化。<br>
+              <strong>燒烤主力：</strong>80% 烹調時間在此區域完成熱穿透。
+            </p>
+          </div>
+
+          <!-- 區 3 -->
+          <div class="zone-column cool">
+            <span class="badge badge-dark" style="background:#2b6e4e; color:#fff; align-self: flex-start;">ZONE 3</span>
+            <h4 style="font-size: 1.2rem; color: #fff; margin-top: 8px;">微溫保溫區 (Holding & Smoke)</h4>
+            <div class="zone-temp">100°C - 120°C</div>
+            <p style="font-size: 0.86rem; color: #ddd; line-height: 1.6;">
+              <strong>木炭排布：</strong>零木炭（利用左側傳導之微餘熱）或僅留零星微灰燼。<br>
+              <strong>適用任務：</strong>帶殼玉米筍/筊白筍低溫悶烤、絲瓜草菇盅密封對流、純素烤麻糬與香蕉巧克力慢烘、已烤熟串烤安全保溫等待上桌。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 常見失敗救援指南網格 -->
+      <div class="troubleshoot-grid">
+        
+        <!-- 救援 1：竹籤防碳化前處理 -->
+        <div class="troubleshoot-card">
+          <h4><i class="fa-solid fa-wand-magic-sparkles"></i> 竹籤防碳化斷裂：物理加壓飽和水工法</h4>
+          <p style="font-size: 0.92rem; color: var(--charcoal-sub); line-height: 1.7;">
+            <strong>失敗痛點：</strong>翻面時竹籤瞬間燒斷，食材散落炭灰中全毀。<br>
+            <strong>科學 SOP：</strong>竹籤（天然毛竹）木質纖維充滿細微空氣毛細管。烤肉前放入<strong>飽和溫鹽水（水溫約 50°C，鹽度 3%）</strong>浸泡至少 <strong>30-40 分鐘</strong>。溫水加速分子擴散排擠空氣，鹽分提高纖維燃點；串好食材後，<strong>露在烤架外的竹籤手握端以一小條鋁箔紙緊密捏緊包覆</strong>，形成絕熱盾牌，任憑大火狂吹亦永不碳化折斷！
+          </p>
+        </div>
+
+        <!-- 救援 2：鋁箔紙亮面霧面科學真相 -->
+        <div class="troubleshoot-card">
+          <h4><i class="fa-solid fa-sheet-plastic"></i> 鋁箔紙亮面 vs 霧面：熱輻射與接觸真相</h4>
+          <p style="font-size: 0.92rem; color: var(--charcoal-sub); line-height: 1.7;">
+            <strong>物理真相揭密：</strong>鋁箔雙層滾軋生產，與拋光滾輪接觸面呈亮面，另一面自然呈霧面。實測反射率：亮面約 88%，霧面約 80%，在炭烤波段反射率差異<strong>小於 8%</strong>。<br>
+            <strong>唯一實戰原則：</strong>若需「反射炭火強烈直火熱輻射、防止表面燒焦」，應將<strong>亮面朝外（朝向炭火）</strong>；若為「絲瓜盅/金針菇封盒」，重點在於<strong>緊密折疊接縫咬死（Crimp Sealing）</strong>，利用密封微正壓鎖死水分，正反面影響微乎其微。
+          </p>
+        </div>
+
+        <!-- 救援 3：燒焦急救與滅火協議 -->
+        <div class="troubleshoot-card">
+          <h4><i class="fa-solid fa-kit-medical"></i> 焦炭急救：主廚外科手術與降溫協議</h4>
+          <p style="font-size: 0.92rem; color: var(--charcoal-sub); line-height: 1.7;">
+            <strong>意外著火（Flare-up）急救：</strong>油脂滴入炭火竄出猛烈黃焰時，<strong>絕對禁止朝烤網噴水！</strong>噴水會揚起細黑煤灰黏附食材，產生濃烈致癌雜酚油。正確作法是立刻將食材「側移至 Zone 3 保溫區」，用長夾在炭火著火點覆蓋少許粗鹽或蓋上烤爐蓋窒息氧氣。<br>
+            <strong>局部燒焦挽救：</strong>不可用水沖洗。以專用料理不鏽鋼剪刀，傾斜 30 度「剪除外層碳化脆殼」，表面薄刷一層橄欖油，再補刷一層甘酒水梨醬或沙茶醬，移入 Zone 2 慢火微焦糖化修補風味缺口。
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       頁尾出版著作宣告
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand" style="max-width: 420px;">
+        <h3>極致純素烤肉全書</h3>
+        <p style="color: #c9ded3; font-size: 0.85rem; line-height: 1.7;">
+          The Definitive Vegan BBQ Compendium: Allium-Free Master Craft & Gastronomic Thermodynamics.<br>
+          本手冊嚴格遵循 100% 無五辛純植物性原料研製，依據「優活健康網」中秋低鈉指南與「找蔬食」露營實戰設計，專為追求極致風味之現代蔬食者與餐飲主廚打造。
+        </p>
+        <div style="margin-top: 14px; font-family: var(--font-mono); font-size: 0.78rem; color: #7f998c;">
+          PRINT STANDARD: ISO 216 A4 (210 × 297 mm) / HIGH CONTRAST WCAG AA
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>核心技術導覽</h4>
+        <ul>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#prep-checklist" style="color:inherit; text-decoration:none;">35項旗艦備料勾選清單</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-ingredients" style="color:inherit; text-decoration:none;">18款食材熱力學圖鑑</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#broccoli-special" style="color:inherit; text-decoration:none;">青花菜平切防褐化專題</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-sauces" style="color:inherit; text-decoration:none;">九大無五辛自調烤肉醬</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-skewers" style="color:inherit; text-decoration:none;">五大金牌串烤黃金矩陣</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#dessert-section" style="color:inherit; text-decoration:none;">炭火尾韻純素甜點專區</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-heat-guide" style="color:inherit; text-decoration:none;">三區炭火架構與救援指南</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>典藏版規格聲明</h4>
+        <p style="font-size: 0.84rem; color: #a4c2b2; line-height: 1.7;">
+          支援單鍵輸出 PDF（快速鍵 Ctrl+P / Cmd+P）。<br>
+          列印模式自動啟動向量排版修正、隱藏按鈕要素、強制分頁保護，
+          保證圖表與食譜無跨頁截斷之完美出版品相。
+        </p>
+        <button class="btn btn-gold no-print" onclick="window.print()" style="margin-top: 12px; font-size: 0.85rem; padding: 8px 16px;">
+          <i class="fa-solid fa-file-pdf"></i> 下載 / 列印典藏 PDF
+        </button>
+      </div>
+    </div>
+
+    <div style="max-width: 1040px; margin: 36px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.78rem; color: #6b8477;">
+      © 2026 VEGAN GASTRONOMY LAB. ALL RIGHTS RESERVED. 本作品內容受智慧財產權與出版協議保護。
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       Vanilla JavaScript 核心互動邏輯
+       - 食材分類篩選器（支援 8 種分類）
+       - 互動備料清單狀態儲存（支援 35 項）與進度條聯動
+       - 平滑捲動與導覽列聯動
+       ========================================================================== -->
+  <script>
+    // --------------------------------------------------------------------------
+    // 1. 食材分類篩選器（Filter Tabs）
+    // --------------------------------------------------------------------------
+    function filterIngredients(category, btnElement) {
+      const cards = document.querySelectorAll('#ingredientCardsContainer .ingredient-card');
+      const buttons = document.querySelectorAll('.filter-tabs-container .filter-btn');
+
+      // 更新按鈕樣式
+      buttons.forEach(btn => btn.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      // 過濾卡片
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-cat');
+        if (category === 'all' || cardCat === category) {
+          card.style.display = 'flex';
+          setTimeout(() => { card.style.opacity = '1'; }, 10);
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+        }
+      });
+    }
+
+    // --------------------------------------------------------------------------
+    // 2. 互動備料清單（Interactive Checklist - 35項）
+    // --------------------------------------------------------------------------
+    const STORAGE_KEY = 'VEGAN_BBQ_CHECKLIST_STATE_V2';
+
+    function initChecklist() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      let checkedIndices = [];
+      if (saved) {
+        try {
+          checkedIndices = JSON.parse(saved);
+        } catch(e) {
+          checkedIndices = [];
+        }
+      }
+
+      const checkboxes = document.querySelectorAll('#checklistGrid input[type="checkbox"]');
+      checkboxes.forEach((cb, idx) => {
+        if (checkedIndices.includes(idx)) {
+          cb.checked = true;
+          cb.closest('.check-item').classList.add('done');
+        } else {
+          cb.checked = false;
+          cb.closest('.check-item').classList.remove('done');
+        }
+      });
+      updateChecklistProgress();
+    }
+
+    function handleCheck(inputEl) {
+      const item = inputEl.closest('.check-item');
+      if (inputEl.checked) {
+        item.classList.add('done');
+      } else {
+        item.classList.remove('done');
+      }
+      saveChecklistState();
+      updateChecklistProgress();
+    }
+
+    function saveChecklistState() {
+      const checkboxes = document.querySelectorAll('#checklistGrid input[type="checkbox"]');
+      const checkedIndices = [];
+      checkboxes.forEach((cb, idx) => {
+        if (cb.checked) checkedIndices.push(idx);
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedIndices));
+    }
+
+    function updateChecklistProgress() {
+      const checkboxes = document.querySelectorAll('#checklistGrid input[type="checkbox"]');
+      const total = checkboxes.length || 35;
+      let checkedCount = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) checkedCount++;
+      });
+
+      const percent = Math.round((checkedCount / total) * 100);
+      document.getElementById('checkSummary').textContent = checkedCount;
+      document.getElementById('checkPercent').textContent = percent + '%';
+      document.getElementById('progressBar').style.width = percent + '%';
+
+      const navCount = document.getElementById('navCheckCount');
+      if (navCount) {
+        navCount.textContent = `${checkedCount}/${total}`;
+      }
+    }
+
+    function resetChecklist() {
+      if (confirm('確定要清空所有已勾選的 35 項備料項目嗎？')) {
+        const checkboxes = document.querySelectorAll('#checklistGrid input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+          cb.checked = false;
+          cb.closest('.check-item').classList.remove('done');
+        });
+        localStorage.removeItem(STORAGE_KEY);
+        updateChecklistProgress();
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. 吸頂導覽與捲動平滑聯動（Scrollspy）
+    // --------------------------------------------------------------------------
+    window.addEventListener('scroll', () => {
+      const navPills = document.querySelectorAll('.nav-scroll .nav-pill');
+      const sections = [
+        document.getElementById('prep-checklist'),
+        document.getElementById('module-ingredients'),
+        document.getElementById('broccoli-special'),
+        document.getElementById('module-sauces'),
+        document.getElementById('module-marinate'),
+        document.getElementById('module-skewers'),
+        document.getElementById('dessert-section'),
+        document.getElementById('module-heat-guide')
+      ];
+
+      const scrollPos = window.scrollY + 100;
+
+      sections.forEach((sec, idx) => {
+        if (!sec) return;
+        const top = sec.offsetTop;
+        const height = sec.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          navPills.forEach(pill => pill.classList.remove('active'));
+          if (navPills[idx]) {
+            navPills[idx].classList.add('active');
+          }
+        }
+      });
+    });
+
+    // 頁面加載完成初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      initChecklist();
+    });
+  </script>
+</body>
+</html>
+'''
+
+output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"Successfully generated {len(html_content.encode('utf-8'))} bytes into {output_path}")
