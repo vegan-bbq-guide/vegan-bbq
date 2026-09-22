@@ -2441,17 +2441,9 @@
 
 
     <!-- ==========================================================================
-         模組 2.5：四大乾式香料熱力學指南與特調風味鹽專區
+         模組 2.5：14 款酸香料熱力學大典與特調風味鹽
          ========================================================================== -->
-    ---
-
-
-
-### 具體代碼替換規格：
-
-
-
-請將 `<section id="module-spices" class="module-section" style="scroll-margin-top: 60px;">
+    <section id="module-spices" class="module-section" style="scroll-margin-top: 60px;">
   <div class="section-title-wrap">
     <span class="section-subtitle">MODULE 02.5 / COMPREHENSIVE PHYTOCHEMICAL SPICE SYSTEM</span>
     <h2 class="section-title">14 款酸香料熱力學大典與特調風味鹽</h2>
@@ -2461,7 +2453,7 @@
     </p>
   </div>
 
-  <!-- 1. 14 款酸香料熱力學全覽矩陣表（完整保留作為核心查閱大表） -->
+  <!-- 1. 14 款酸香料熱力學全覽矩陣表 -->
   <div class="checklist-card" style="margin-bottom: 36px;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
       <div>
@@ -2590,7 +2582,7 @@
     </div>
   </div>
 
-  <!-- 2. 五大素烤跨界風味矩陣（全 14 款材料融會貫通） -->
+  <!-- 2. 五大素烤跨界風味矩陣 -->
   <div style="margin-bottom: 36px;">
     <h3 style="font-size: 1.35rem; color: var(--primary-forest); margin-bottom: 16px; border-left: 4px solid var(--caramel-gold); padding-left: 10px;">
       五大素烤香料黃金搭配矩陣
@@ -2644,7 +2636,7 @@
         </div>
       </div>
 
-      <!-- 組合 4（新增） -->
+      <!-- 組合 4 -->
       <div class="skewer-card">
         <div class="skewer-badge-bar">
           <span class="badge badge-dark">矩陣 04</span>
@@ -2660,7 +2652,7 @@
         </div>
       </div>
 
-      <!-- 組合 5（新增） -->
+      <!-- 組合 5 -->
       <div class="skewer-card">
         <div class="skewer-badge-bar">
           <span class="badge badge-dark">矩陣 05</span>
@@ -2678,7 +2670,7 @@
     </div>
   </div>
 
-  <!-- 3. 主廚特調：四款全能素烤風味鹽/油配方表（升級為 4 款） -->
+  <!-- 3. 主廚特調：四款全能素烤風味鹽/油配方表 -->
   <div class="checklist-card" style="margin-top: 24px;">
     <h3 style="font-size: 1.2rem; color: var(--primary-forest); margin-bottom: 14px;">
       <i class="fa-solid fa-scale-balanced" style="color:var(--caramel-gold);"></i> 主廚特調：四款全能素烤風味鹽與烘烤油配方表
@@ -2722,272 +2714,9 @@
       </table>
     </div>
   </div>
-</section>` 之間的所有內容，替換為以下重構結構：
+</section>
 
-
-
-```html
-
-<section id="module-spices" class="module-section" style="scroll-margin-top: 60px;">
-
-  <div class="section-title-wrap">
-
-    <span class="section-subtitle">MODULE 02.5 / COMPREHENSIVE PHYTOCHEMICAL SPICE SYSTEM</span>
-
-    <h2 class="section-title">14 款酸香料熱力學大典與特調風味鹽</h2>
-
-    <p class="section-desc">
-
-      植物性食材缺乏動物性飽和油脂與血紅素，調味成敗取決於「脂溶/水溶介質傳遞」與「熱解耐受溫區」。
-
-      整合 14 款天然有機酸與非五辛辛香料，建立覆蓋大漠、地中海、日式、川蜀與漢方之五維調味光譜。
-
-    </p>
-
-  </div>
-
-
-
-  <!-- 1. 14 款酸香料熱力學全覽矩陣表（完整保留作為核心查閱大表） -->
-
-  <div class="checklist-card" style="margin-bottom: 36px;">
-
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
-
-      <div>
-
-        <span class="badge badge-dark"><i class="fa-solid fa-flask-vial"></i> 調味化學動力學</span>
-
-        <h3 style="font-size: 1.3rem; color: var(--primary-forest); margin-top: 6px;">
-
-          14 款酸香料熱力學適用性與施放時機全覽矩陣表
-
-        </h3>
-
-      </div>
-
-      <span style="font-size: 0.82rem; color: var(--charcoal-sub); font-family: var(--font-mono);">
-
-        COMPLETE SPICE DYNAMICS (14 PROFILES)
-
-      </span>
-
-    </div>
-
-
-
-    <div class="recipe-table-wrap">
-
-      <table class="recipe-table">
-
-        <thead>
-
-          <tr>
-
-            <th style="min-width: 110px;">調味品項</th>
-
-            <th style="min-width: 150px;">核心呈味化學分子</th>
-
-            <th style="min-width: 140px;">熱敏性與耐熱閾值</th>
-
-            <th style="min-width: 90px;">介入屬性</th>
-
-            <th style="min-width: 220px;">最適工法與施放時機</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          <tr>
-
-            <td><strong>七味唐辛子</strong></td>
-
-            <td>陳皮檸檬烯、辣椒素、芝麻酚</td>
-
-            <td><span class="badge badge-dark" style="background:#d9534f; color:#fff;">極高熱敏</span> (&gt;150°C 炭化)</td>
-
-            <td><span class="badge badge-forest">出爐後置</span></td>
-
-            <td><strong>後置提香：</strong>嚴禁直火受熱；起鍋前 10 秒或盛盤後利用餘溫激發陳皮果香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>普羅旺斯香料</strong></td>
-
-            <td>迷迭香酸、百里酚、香芹酚</td>
-
-            <td><span class="badge badge-gold">忌觸明火</span> (乾葉秒燃)</td>
-
-            <td><span class="badge badge-forest">脂質包覆</span></td>
-
-            <td><strong>油溶滲透：</strong>必須調入初榨橄欖油浸潤後刷膜，藉油膜隔火導熱。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>孜然 (粉/粒)</strong></td>
-
-            <td>枯茗醛 (Cuminaldehyde)、萜烯</td>
-
-            <td><span class="badge badge-forest">高耐熱性</span> (耐受 170°C)</td>
-
-            <td><span class="badge badge-gold">高溫激發</span></td>
-
-            <td><strong>中段激發：</strong>食材七分熟表面溢油時撒覆，高溫裂解出類肉質炭香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>小茴香粉</strong></td>
-
-            <td>反式茴香腦 (Anethole)、葑酮</td>
-
-            <td><span class="badge badge-forest">中高耐熱</span> (耐中火慢焙)</td>
-
-            <td><span class="badge badge-forest">風味協同</span></td>
-
-            <td><strong>修飾去澀：</strong>與孜然複配中和微苦，或加入預醃液提供清甜回甘。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>新鮮檸檬汁</strong></td>
-
-            <td>檸檬酸、水溶性維生素C</td>
-
-            <td><span class="badge badge-dark" style="background:#d9534f; color:#fff;">極高熱敏</span> (&gt;70°C 氧化)</td>
-
-            <td><span class="badge badge-forest">出爐後置</span></td>
-
-            <td><strong>出爐淋醬：</strong>嚴禁上架烘烤；離火裝盤後滴淋提鮮，防止葉綠素褐化。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>純天然蘋果醋</strong></td>
-
-            <td>蘋果酸、揮發性果香酯類</td>
-
-            <td><span class="badge badge-gold">中等耐熱</span> (耐受 100°C 沸騰)</td>
-
-            <td><span class="badge badge-forest">全程通用</span></td>
-
-            <td><strong>醬料基底：</strong>調入美式 BBQ 醬中微滾慢熬，提供圓潤果酸骨架。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>頂級紅酒醋</strong></td>
-
-            <td>天然酒石酸、葡萄多酚單寧</td>
-
-            <td><span class="badge badge-gold">中高耐熱</span> (耐受 120°C 濃縮)</td>
-
-            <td><span class="badge badge-forest">油醋深色醬</span></td>
-
-            <td><strong>濃縮提味：</strong>高溫受熱縮汁呈果木酸甜；專搭波特菇、牛番茄與高麗菜排。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>乾燥月桂葉</strong></td>
-
-            <td>1,8-桉葉素 (Cineole)、月桂烯</td>
-
-            <td><span class="badge badge-dark" style="background:#d9534f; color:#fff;">忌明火</span> (乾燥葉觸火秒燃)</td>
-
-            <td><span class="badge badge-forest">液相熱萃</span></td>
-
-            <td><strong>水相熱浸：</strong>投入豆製品 95°C 汆燙熱醃漬液中慢萃，帶出草本清香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>大紅八角</strong></td>
-
-            <td>反式茴香腦 (trans-Anethole)</td>
-
-            <td><span class="badge badge-forest">高耐熱性</span> (耐受 &gt;160°C 高溫)</td>
-
-            <td><span class="badge badge-forest">深層去腥</span></td>
-
-            <td><strong>深層去腥：</strong>碾碎投入豆干醃漬液或醬油膏，螯合大豆蛋白去異味。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>天然肉桂粉</strong></td>
-
-            <td>肉桂醛 (Cinnamaldehyde)</td>
-
-            <td><span class="badge badge-forest">高耐熱性</span> (耐受 &gt;150°C 熱轉化)</td>
-
-            <td><span class="badge badge-gold">甜鹹雙棲</span></td>
-
-            <td><strong>木質修飾：</strong>微量入美式烤醬深化炭香；或撒於烤香蕉與南瓜引發焦糖香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>大紅袍花椒</strong></td>
-
-            <td>羥基-α-山椒素、花椒烯</td>
-
-            <td><span class="badge badge-gold">中等耐熱</span> (直火易焦，極易溶於油)</td>
-
-            <td><span class="badge badge-forest">油脂介質</span></td>
-
-            <td><strong>低溫慢煉：</strong>以 120°C 油溫萃取麻素，調入赤味噌或素沙茶刷醬中烤香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>頂級青花椒</strong></td>
-
-            <td>芳樟醇、檸檬烯、高活性山椒素</td>
-
-            <td><span class="badge badge-dark" style="background:#d9534f; color:#fff;">高揮發性</span> (高熱清檸香逸散)</td>
-
-            <td><span class="badge badge-forest">微溫提香</span></td>
-
-            <td><strong>出爐撒覆：</strong>研磨成細粉，起鍋前 10 秒微溫撒覆，保留爆發性青檸清麻香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>特級黑胡椒碎</strong></td>
-
-            <td>胡椒鹼 (Piperine)、水芹烯</td>
-
-            <td><span class="badge badge-forest">中高耐熱</span> (粗顆粒耐 180°C 炙烤)</td>
-
-            <td><span class="badge badge-forest">主力基礎</span></td>
-
-            <td><strong>炙烤粗粒：</strong>現磨粗顆粒與油混合裹附食材表面，高溫炙烤產生爆裂胡椒香。</td>
-
-          </tr>
-
-          <tr>
-
-            <td><strong>純淨白胡椒粉</strong></td>
-
-
-    <!-- ==========================================================================
+<!-- ==========================================================================
          模組 3：高密度蛋白製品深層入味醃漬工法（天貝與豆干專用）
          ========================================================================== -->
     <section id="module-marinate" class="module-section" style="scroll-margin-top: 60px;">
