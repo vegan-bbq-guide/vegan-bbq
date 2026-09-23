@@ -727,6 +727,16 @@
       flex-direction: column;
       gap: 20px;
     }
+    .sauce-pairing-box {
+      background: var(--forest-tint);
+      border-left: 3px solid var(--primary-forest);
+      padding: 10px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.88rem;
+      margin: 10px 0;
+    }
+    .sauce-pairing-box strong { color: var(--primary-forest); }
+
     .sauce-section-title {
       font-size: 0.92rem;
       font-weight: 700;
@@ -1369,20 +1379,20 @@
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">薑絲金針菇鋁箔盒 (封閉熱對流循環)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">鮮採黑木耳 (吸乾水分刺孔微烤)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">雪白菇黑胡椒燒 (鋁箔包封閉燜烤)</span><span class="check-category-tag tag-mush">[菇類]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">台農57號黃金地瓜 (微火低溫長燜流蜜)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">雙色水果玉米 (內苞葉包覆焦糖化)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">日本山藥 (帶皮厚切10mm烤出脆殼)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">栗子南瓜 (8mm弧切釋放胡蘿蔔素)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">澎湖絲瓜草菇盅 (鋁箔小盅原湯煨熟)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">官田水雉菱角 (背部劃刀鋁箔燜透)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">秋旬鬆脆蓮藕 (醋水浸泡中大火烤脆)</span><span class="check-category-tag tag-starch">[根莖果物]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">經典純素紫米糕 (微火烤透再撒花生粉)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">金鑽鳳梨厚片 (厚切大火烙焦糖紋)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素日式烤麻糬 (微火慢烤膨脹圓球)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素無明膠棉花糖 (懸空餘熱慢轉焦糖化)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">肉桂巧克力烤香蕉 (帶皮填純素黑可可)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">炭烤純素厚片吐司 (微火快烤外脆內軟)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">糖蜜溫潤烤橘子 (蒂頭填海鹽鋁箔溫烤)</span><span class="check-category-tag tag-dessert">[台味與甜點]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">台農57號地瓜 (微火低溫長燜流蜜)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">日本山藥 (帶皮厚切10mm烤出脆殼)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">栗子南瓜 (8mm弧切釋放胡蘿蔔素)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">官田菱角 (背部劃刀鋁箔燜透)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">秋旬蓮藕 (醋水浸泡中大火烤脆)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">黃金馬鈴薯厚塊 (厚切15mm預蒸刷油)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">大甲檳榔心芋頭 (厚切12mm預蒸噴油烤酥)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">關東高湯白蘿蔔 (厚切20mm高湯先煨透)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">香草蜜烤胡蘿蔔 (縱切長條迷迭香油封)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">有機醬燒牛蒡 (厚切斜段拍鬆預汆燙)</span><span class="check-category-tag tag-root">[根莖]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">經典純素紫米糕 (微火烤透再撒花生粉)</span><span class="check-category-tag tag-taiwan">[台味]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">澎湖絲瓜草菇盅 (鋁箔小盅原湯煨熟)</span><span class="check-category-tag tag-taiwan">[台味]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">雙色水果玉米 (內苞葉包覆焦糖化)</span><span class="check-category-tag tag-dessert">[果物]</span></label>
+          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素日式烤麻糬 (微火慢烤膨脹圓球)</span><span class="check-category-tag tag-dessert">[甜點]</span></label>
         </div>
       </div>
     </section>
@@ -1934,6 +1944,11 @@
               </p>
             </div>
 
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>純生豆包、日本山藥、白玉厚豆干、帶皮馬鈴薯、雙色水果玉米。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>高光澤麥芽糖能填補多孔豆包與山藥微孔隙，中溫形成鏡面焦糖殼，昆布麩胺酸加乘食材鮮甜。</div>
+            </div>
+
             <div>
               <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 350g）</div>
               <div class="recipe-table-wrap">
@@ -1984,6 +1999,11 @@
                 雙倍濃縮純番茄糊富含天然檸檬酸與蘋果酸，能中和大豆製品油膩感；
                 精選西班牙橡木冷煙燻製之煙燻紅椒粉釋放癒創木酚（Guaiacol）與丁香酚香氣，模擬傳統原木柴燻焦香；黑糖蜜在高溫下產生活潑熱降解焦糖香。
               </p>
+            </div>
+
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>純素植物肉排/香腸、黃金馬鈴薯厚塊、栗子南瓜、烤牛番茄。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>有機酸中和油脂感，黑糖蜜遇高溫焦糖化覆蓋表面，肉桂與煙燻紅椒粉深化炭燻香。</div>
             </div>
 
             <div>
@@ -2042,6 +2062,11 @@
               </p>
             </div>
 
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>天然印尼天貝、古法麵腸、烤綠櫛瓜、厚切杏鮑菇。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>天貝與麵腸缺乏油脂，高脂濃椰漿與顆粒花生醬乳化成保水膜，薑黃薑酮徹底去除大豆發酵味。</div>
+            </div>
+
             <div>
               <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 380g）</div>
               <div class="recipe-table-wrap">
@@ -2094,6 +2119,11 @@
                 長期熟成的赤味噌富含類黑素（Melanoidin）與大豆短胜肽，鮮味深邃且耐熱；
                 結合大紅袍與青花椒之羥基-α-山椒素（Hydroxy-α-sanshool），刺激三叉神經產生 50Hz 物理性微震顫麻感，紅亮濃香。
               </p>
+            </div>
+
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>大溪五香厚豆干、日本圓茄、炸三角油豆腐、純素蒟蒻丸。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>赤味噌類黑素耐高溫，羥基山椒素引發麻感，重風味能穿透厚豆腐蜂巢孔隙壓制豆生腥。</div>
             </div>
 
             <div>
@@ -2149,6 +2179,11 @@
               </p>
             </div>
 
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>純素黑輪片、純素牛蒡甜不辣、帶殼筊白筍、純素百頁豆腐。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>水梨果糖於 110°C 低溫焦糖化，為膨脹起泡之甜不辣提供薄脆紅亮糖衣，溫潤微辣。</div>
+            </div>
+
             <div>
               <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 360g）</div>
               <div class="recipe-table-wrap">
@@ -2200,6 +2235,11 @@
                 精選特級紫菜鮮味多醣與慢火烘焙之乾燥香菇柄細微纖維，構建出深具顆粒感的濃郁底韻；
                 結合天然糯米調和之黑豆蔭油膏，提供高溫耐受性極強的黏性護膜；純素烏醋的天然果酸與熟白芝麻粉在高溫炭火熱力激發下，爆發出濃郁撲鼻的經典台式炭火素烤香。
               </p>
+            </div>
+
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>經典純素紫米糕、古法麵腸、大甲芋頭排、生鮮厚猴頭菇。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>紫菜多醣與香菇柄微纖維嵌入紫米與麵腸摺皺中，黑豆蔭油膏高溫鎖定夜市炭烤香。</div>
             </div>
 
             <div>
@@ -2255,6 +2295,11 @@
               </p>
             </div>
 
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>綠櫛瓜、甜彩椒、鮮脆綠蘆筍、翠綠四季豆、原木波特菇。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>初榨橄欖油單元不飽和脂肪酸形成隔火層，檸檬酸維持葉綠素翠綠，果酸生津。</div>
+            </div>
+
             <div>
               <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 200g）</div>
               <div class="recipe-table-wrap">
@@ -2306,6 +2351,11 @@
                 新鮮香茅嫩莖釋放高純度香茅醛（Citronellal）與檸檬醛，結合芫荽根部揮發油，帶來極具爆發力的熱帶辛香；
                 未精製椰糖漿的低 GI 焦糖分子溫柔包覆高酸度青檸檬汁，朝天椒素微量釋放刺激口腔三叉神經，帶來極度生津解膩的絕妙口感。
               </p>
+            </div>
+
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>帶殼黃金玉米筍、白靈菇/雪白菇、手工腐皮蘆筍捲、鮮嫩娃娃菜。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>香茅醛與青檸原汁高揮發高穿透，為多汁嫩蔬菜提供瞬間生津解膩的跳躍感。</div>
             </div>
 
             <div>
@@ -2361,6 +2411,11 @@
               </p>
             </div>
 
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>澎湖絲瓜草菇盅、關東高湯白蘿蔔、鮮甜娃娃菜、彩色小番茄串。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>文旦果膠低鈉自然掛壁，檸檬烯果香與絲瓜、白蘿蔔之天然多醣清甜高湯完美契合。</div>
+            </div>
+
             <div>
               <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 232g）</div>
               <div class="recipe-table-wrap">
@@ -2411,6 +2466,11 @@
                 特級純釀紅酒醋富含葡萄多酚單寧與天然酒石酸，高溫受熱時迅速濃縮成透亮果木酸甘薄膜；
                 現磨粗粒黑胡椒受熱釋放脂溶性胡椒鹼與水芹烯，起鍋前調入新鮮檸檬汁提亮高音酸度，與冷壓初榨橄欖油達成完美的油醋乳化，極致解膩生津。
               </p>
+            </div>
+
+            <div class="sauce-pairing-box">
+              <div><strong><i class="fa-solid fa-utensils"></i> 推薦搭配食材：</strong>原木波特菇、牛番茄厚輪片、秋旬鬆脆蓮藕、蜜烤水果胡蘿蔔。</div>
+              <div style="margin-top: 4px; color: var(--charcoal-sub);"><strong><i class="fa-solid fa-atom"></i> 搭配機制：</strong>酒石酸在高溫下縮汁成果木酸甜薄膜，粗黑胡椒爆裂辛香，增幅厚實根莖與蕈菇風味。</div>
             </div>
             <div>
               <div class="sauce-section-title"><i class="fa-solid fa-scale-balanced"></i> 主廚精確配比（淨重約 230g）</div>
@@ -4227,131 +4287,47 @@
   },
   {
     "id": 37,
-    "name": "台農57號黃金地瓜 TNG57 Golden Sweet Potato",
+    "name": "台農57號地瓜 TNG57 Golden Sweet Potato",
     "category": "starch",
     "categoryName": "根莖類",
     "badgeClass": "badge-gold",
-    "highlight": "β-澱粉酶高活性溫區",
+    "highlight": "β-澱粉酶活化",
     "specs": [
       [
-        "最佳厚度規格",
-        "整顆直徑 4-5cm 帶皮，或切 10mm 厚片"
+        "最佳厚度/規格",
+        "直徑 4-5cm 圓整小條或 15mm 輪切厚片"
       ],
       [
-        "油脂阻水膜/前處理",
-        "整顆包雙層鋁箔，切片雙面刷油"
+        "表面處理/預處理",
+        "刷淨帶皮不削皮，鋁箔紙雙層密封包裹"
       ],
       [
         "適烤溫區",
-        "微火餘熱區 (130-150°C)"
+        "微火弱炭區 (120-140°C)"
       ],
       [
         "翻面/出爐標誌",
-        "整顆捏壓徹底綿軟、蜜汁焦糖流出"
+        "按壓微軟有彈性、外皮微焦溢出蜜糖香"
       ]
     ],
-    "physics": "地瓜中的 β-澱粉酶在 65-75°C 具有最高活性，能將直鏈澱粉水解為高甜度麥芽糖。長時間（40-50分鐘）低溫炭火餘熱燜烤，使地瓜心部在該黃金溫區停留時間最大化，澱粉糊化徹底，糖度急遽飆升至流蜜狀態。",
-    "pitfall": "【地雷】大火急烤導致外皮焦黑而中心仍生硬白心；【預防】置於烤爐邊緣微火炭灰中長時間慢燜。"
+    "physics": "地瓜內部高濃度 β-澱粉酶在 65-75°C 溫區活性最高，能將大分子澱粉催化分解為麥芽糖。藉由鋁箔封閉微孔進行低溫長時燜烤（至少 25-30 分鐘），可使麥芽糖累積量最大化，並促成果膠質溫和水解，烤出流蜜拉絲的綿密軟糯質地。",
+    "pitfall": "切忌直接放強火區或大火急烤，外皮碳化焦黑而中心澱粉酶過早失活，導致口感夾生粉澀。"
   },
   {
     "id": 38,
-    "name": "雙色水果玉米 Bicolor Sweet Corn",
-    "category": "fruit",
-    "categoryName": "鮮甜果物",
-    "badgeClass": "badge-forest",
-    "highlight": "胚乳蔗糖急遽焦糖化",
-    "specs": [
-      [
-        "最佳厚度規格",
-        "橫切成 3-4cm 輪段，或帶內薄苞葉"
-      ],
-      [
-        "油脂阻水膜/前處理",
-        "表面刷純素植物奶油或味醂薄醬"
-      ],
-      [
-        "適烤溫區",
-        "中火區 (160-180°C)"
-      ],
-      [
-        "翻面/出爐標誌",
-        "玉米粒飽滿微脹、微焦黃飄香"
-      ]
-    ],
-    "physics": "雙色水果玉米胚乳富含高濃度水溶性蔗糖（非普通澱粉玉米）。直火中溫烘烤使外層水分微蒸發，蔗糖受熱在 160°C 發生焦糖化反應，釋放出香莢蘭醛與二乙醯等濃郁奶香焦甜化合物，粒粒爆漿。",
-    "pitfall": "【地雷】直火烈烤導致表面脫水乾癟發黑；【預防】保留一層內薄苞葉烘烤，出爐前 2 分鐘剝除苞葉刷奶油上色。"
-  },
-  {
-    "id": 39,
     "name": "日本山藥 Japanese Nagaimo",
     "category": "starch",
     "categoryName": "根莖類",
     "badgeClass": "badge-gold",
-    "highlight": "黏質多醣與澱粉脆化",
+    "highlight": "黏蛋白高溫酥化",
     "specs": [
       [
-        "最佳厚度規格",
-        "保留外皮刷淨，厚切 10 - 12 mm 圓片"
+        "最佳厚度/規格",
+        "10 - 12 mm 帶皮厚輪切片"
       ],
       [
-        "油脂阻水膜/前處理",
-        "雙面刷純釀造醬油或白芝麻油"
-      ],
-      [
-        "適烤溫區",
-        "中大火區 (180-200°C)"
-      ],
-      [
-        "翻面/出爐標誌",
-        "兩面金黃焦斑、邊緣酥脆中心綿軟"
-      ]
-    ],
-    "physics": "日本山藥含有高濃度黏質多醣蛋白（Mucin）與支鏈澱粉。外皮富含多酚氧化酶與纖維素；保留外皮厚切進行大火快烤，外層澱粉迅速糊化脫水形成如洋芋片般的焦脆殼，內部多醣體受熱凝膠化，帶來「外脆內鬆糯」的獨特雙重質地。",
-    "pitfall": "【地雷】去皮後手滑且氧化發黑，切太薄容易軟爛；【預防】帶皮刷洗乾淨後厚切 1cm 以上，切面刷薄油防止黏網。"
-  },
-  {
-    "id": 40,
-    "name": "栗子南瓜 Kabocha Squash",
-    "category": "starch",
-    "categoryName": "根莖類",
-    "badgeClass": "badge-gold",
-    "highlight": "類胡蘿蔔素脂溶性釋放",
-    "specs": [
-      [
-        "最佳厚度規格",
-        "帶皮切成 8 - 10 mm 弧形厚片"
-      ],
-      [
-        "油脂阻水膜/前處理",
-        "雙面刷橄欖油或植物奶油"
-      ],
-      [
-        "適烤溫區",
-        "中火區 (160-175°C)"
-      ],
-      [
-        "翻面/出爐標誌",
-        "邊緣焦糖化微焦黑、筷子輕易刺透"
-      ]
-    ],
-    "physics": "栗子南瓜果肉水分較低（約 70%），澱粉含量極高。烘烤時澱粉分子在高溫下糊化轉化為糊精與麥芽糖，產生濃郁栗子香氣；果肉中的脂溶性 β-胡蘿蔔素藉由油脂刷膜充分釋放，甜度與營養價值同步達到峰值。",
-    "pitfall": "【地雷】切片過厚（超過 15mm）導致外層已焦而心部堅硬；【預防】厚度控制在 8-10mm，帶皮烘烤維持結構完整。"
-  },
-  {
-    "id": 41,
-    "name": "澎湖絲瓜草菇盅 Penghu Luffa & Straw Mushroom Cup",
-    "category": "taiwan-classic",
-    "categoryName": "台味經典",
-    "badgeClass": "badge-forest",
-    "highlight": "95% 水分封閉水浴",
-    "specs": [
-      [
-        "最佳厚度規格",
-        "絲瓜切 25mm 厚輪，中心挖槽放草菇"
-      ],
-      [
-        "油脂阻水膜/前處理",
-        "雙層鋁箔紙摺小碗盅，滴薑汁麻油"
+        "表面處理/預處理",
+        "火烤去根毛，表面薄刷芝麻油或橄欖油"
       ],
       [
         "適烤溫區",
@@ -4359,263 +4335,347 @@
       ],
       [
         "翻面/出爐標誌",
-        "絲瓜翠綠變軟、凹槽盛滿絲瓜原湯"
+        "單面烤 2.5 分鐘呈金黃微焦，表面黏液收乾起微泡"
       ]
     ],
-    "physics": "澎湖絲瓜（十角絲瓜）肉質緊密脆甜，不易氧化發黑。切成厚輪盅置於鋁箔中受熱時，絲瓜自身 95% 水分受熱滲出，與草菇鳥苷酸形成天然高湯水浴，在盅內沸騰循環自燜，完全無須額外加水即可得到極致清甜。",
-    "pitfall": "【地雷】直放烤網導致果肉水分滴光乾癟；【預防】務必置於鋁箔小盅內慢火煨烤。"
+    "physics": "日本山藥富含水溶性黏多醣蛋白（Mucin）與薯蕷皂苷。帶皮厚切能利用表皮木質纖維支撐形狀；油脂傳導中溫使表面游離胺基酸與澱粉迅速梅納褐變，形成類似米餅般外脆硬、內心綿密拉絲的雙重熱力學質地。",
+    "pitfall": "避免削皮切過薄（<8mm），高溫下黏蛋白水分瞬間逸散導致卡網碎裂，失去爽脆口感。"
+  },
+  {
+    "id": 39,
+    "name": "栗子南瓜 Kabocha Squash",
+    "category": "starch",
+    "categoryName": "根莖類",
+    "badgeClass": "badge-gold",
+    "highlight": "類胡蘿蔔素脂溶釋放",
+    "specs": [
+      [
+        "最佳厚度/規格",
+        "8 - 10 mm 弧形帶皮厚月牙片"
+      ],
+      [
+        "表面處理/預處理",
+        "去籽保留深綠果皮，表面均勻抹植物油"
+      ],
+      [
+        "適烤溫區",
+        "中慢火區 (150-170°C)"
+      ],
+      [
+        "翻面/出爐標誌",
+        "果肉邊緣微焦金黃、竹籤可輕易穿透"
+      ]
+    ],
+    "physics": "栗子南瓜含有極高比例的直鏈澱粉與脂溶性類胡蘿蔔素。帶皮切片在 150-170°C 烘烤時，澱粉顆粒迅速吸水膨脹糊化成粉質栗子口感；植物油脂有助於高溫萃取脂溶性β-胡蘿蔔素，散發天然堅果焦糖香氣。",
+    "pitfall": "嚴禁直接去皮切塊直火烘烤，缺乏果皮張力支撐極易塌陷化泥散落烤網。"
+  },
+  {
+    "id": 40,
+    "name": "官田菱角 Guantian Water Caltrop",
+    "category": "starch",
+    "categoryName": "根莖類",
+    "badgeClass": "badge-gold",
+    "highlight": "封閉硬殼高壓蒸氣",
+    "specs": [
+      [
+        "最佳厚度/規格",
+        "成熟飽滿兩角菱，背部以刀劃開 1mm 橫口"
+      ],
+      [
+        "表面處理/預處理",
+        "洗淨瀝乾，可單顆鋁箔包裹或帶殼直烤"
+      ],
+      [
+        "適烤溫區",
+        "中慢火區 (150-160°C)"
+      ],
+      [
+        "翻面/出爐標誌",
+        "外殼轉深黑褐色，開口處溢出白色澱粉粉質"
+      ]
+    ],
+    "physics": "菱角木質化硬殼形成天然微型高壓蒸氣腔。背部開刀口可防止內部蒸氣壓力驟增引發爆裂，並使腔內高壓過熱蒸氣在 100-110°C 下將緊密排列的支鏈澱粉徹底糊化，達成鬆軟綿密如栗子的粉嫩口感。",
+    "pitfall": "絕對不可未劃刀直接丟入炭火中烤，密閉氣室受熱膨脹極具爆炸噴射危險。"
+  },
+  {
+    "id": 41,
+    "name": "秋旬蓮藕 Autumn Crisp Lotus Root",
+    "category": "starch",
+    "categoryName": "根莖類",
+    "badgeClass": "badge-gold",
+    "highlight": "果膠多酚抗褐化",
+    "specs": [
+      [
+        "最佳厚度/規格",
+        "5 - 6 mm 橫切多孔輪片"
+      ],
+      [
+        "表面處理/預處理",
+        "白醋水浸泡 5 分鐘抑酪氨酸酶，擦乾刷薄油"
+      ],
+      [
+        "適烤溫區",
+        "中大火區 (170-190°C)"
+      ],
+      [
+        "翻面/出爐標誌",
+        "雙面烙出微焦烤痕，孔洞周圍呈金黃半透明"
+      ]
+    ],
+    "physics": "蓮藕含有天然果膠質、原花青素與多酚氧化酶。醋水酸性環境抑制酚酶褐化；多孔蜂巢通道加速熱風對流循環，在 180°C 高溫下表面澱粉迅速脫水糊化形成薄脆外殼，保留內部半纖維素的清脆多汁骨架。",
+    "pitfall": "切忌久置空氣中未泡酸水，多酚氧化會使藕片發黑發苦；切太厚則外焦內生。"
   },
   {
     "id": 42,
-    "name": "官田水雉菱角 Guantian Water Caltrop",
+    "name": "黃金馬鈴薯厚塊 Golden Potato Steak",
     "category": "starch",
     "categoryName": "根莖類",
     "badgeClass": "badge-gold",
-    "highlight": "高密度直鏈澱粉糊化",
+    "highlight": "表面糊化二次脆化",
     "specs": [
       [
-        "最佳厚度規格",
-        "帶硬殼在凹背劃深刀，或去殼菱角仁"
+        "最佳厚度/規格",
+        "15 - 18 mm 厚輪切塊或厚排"
       ],
       [
-        "油脂阻水膜/前處理",
-        "整粒滾鹽水，包入鋁箔紙燜烤"
+        "表面處理/預處理",
+        "鹽水預煮至八分熟（中心微軟），滾乾水份刷橄欖油"
       ],
       [
         "適烤溫區",
-        "微火炭火區 (150-170°C)"
+        "中大火區 (170-190°C)"
       ],
       [
         "翻面/出爐標誌",
-        "刀口微爆裂白肉微凸、飄板栗香"
+        "表面起細密金黃微泡、雙面深金黃脆殼"
       ]
     ],
-    "physics": "官田二角紅菱富含極高密度直鏈澱粉與多酚類物質。外硬殼厚實緻密，包覆鋁箔慢烤能形成微型高壓悶罐，水蒸氣在內部循環將高密度澱粉粒子徹底糊化膨脹，質地由生澀堅硬轉化為極致鬆軟綿密，甜味溫潤厚實。",
-    "pitfall": "【地雷】外殼未劃刀直接加熱引發爆裂傷人；【預防】務必以菜刀在背部劃開深裂縫。"
+    "physics": "馬鈴薯細胞壁富含果膠酸鈣。預煮時細胞膜破裂使表面游離澱粉預先糊化；上烤網後在高溫油脂介質傳導下，表面糊化層快速脫水形成酥脆多孔的凝膠外殼（Starch Crust），內部水分則微孔化蒸發，質地鬆綿如雪花。",
+    "pitfall": "生馬鈴薯嚴禁直接上烤網生烤，導熱極慢外皮焦黑內部仍堅硬生澀且含龍葵鹼風險。"
   },
   {
     "id": 43,
-    "name": "秋旬鬆脆蓮藕 Autumn Crisp Lotus Root",
+    "name": "大甲檳榔心芋頭 Dajia Taro Steak",
     "category": "starch",
     "categoryName": "根莖類",
     "badgeClass": "badge-gold",
-    "highlight": "藕粉多酚抗氧化導熱",
+    "highlight": "紫斑維管束粉質化",
     "specs": [
       [
-        "最佳厚度規格",
-        "去皮橫切 6 - 8 mm 輪片（顯露孔紋）"
+        "最佳厚度/規格",
+        "12 - 15 mm 厚切厚排或長厚條"
       ],
       [
-        "油脂阻水膜/前處理",
-        "泡白醋水 2 分防黑，雙面刷油椒鹽"
+        "表面處理/預處理",
+        "去皮大火預蒸 8 分鐘至八分熟，刷植物油膜防沾"
       ],
       [
         "適烤溫區",
-        "中大火區 (175-190°C)"
+        "中火區 (160-180°C)"
       ],
       [
         "翻面/出爐標誌",
-        "孔道邊緣微焦金黃、質地爽脆不乾"
+        "表面烙出焦香網紋，邊角微脆且筷子可輕易穿透"
       ]
     ],
-    "physics": "蓮藕橫切面之通氣孔道能加速熱風對流穿透，提升導熱效率。中大火迅速使表面澱粉形成微脆硬殼，短暫浸醋水可抑制多酚氧化酶並穩定果膠，使蓮藕在烤後依然保持雪白晶亮與爽脆甘甜兼備的口感。",
-    "pitfall": "【地雷】切片太厚不易烤透，未泡醋水導致受熱變灰黑；【預防】厚度控制在 6-8mm，切後立即浸醋水瀝乾刷油。"
+    "physics": "大甲檳榔心芋頭澱粉顆粒細小（微米級），直鏈與支鏈澱粉比例均勻。預蒸使澱粉充分吸水糊化；中火炙烤促使表面游離糖產生梅納反應焦香，內部游離水分在蒸氣微孔化中膨化，展現極致蓬鬆粉潤、入口即化的芋香質地。",
+    "pitfall": "切勿生芋直接直火乾烤，表面易焦黑且內含草酸鈣針狀結晶未遭高溫破壞，食用會刺激喉嚨發癢。"
   },
   {
     "id": 44,
-    "name": "經典純素紫米糕 Classic Vegan Purple Rice Cake",
-    "category": "taiwan-classic",
-    "categoryName": "台味經典",
-    "badgeClass": "badge-dark",
-    "highlight": "支鏈花青素凝膠軟化",
+    "name": "關東高湯白蘿蔔 Kanto Daikon Radish",
+    "category": "starch",
+    "categoryName": "根莖類",
+    "badgeClass": "badge-gold",
+    "highlight": "昆布高湯熱對流煨透",
     "specs": [
       [
-        "最佳厚度規格",
-        "切成 12-15mm 厚長方條，竹籤串起"
+        "最佳厚度/規格",
+        "20 - 25 mm 圓輪厚塊，周圍削去厚皮並倒角"
       ],
       [
-        "油脂阻水膜/前處理",
-        "雙面刷薄油，先烤軟再刷厚辣醬"
+        "表面處理/預處理",
+        "十字劃深刀 1/3，昆布高湯預先慢火煨煮至半透明"
       ],
       [
         "適烤溫區",
-        "中微火區 (140-160°C)"
+        "中弱火區 (140-160°C) 或鋁箔皿原湯慢煨"
       ],
       [
         "翻面/出爐標誌",
-        "外表微硬脆微膨、筷子穿透無硬心"
+        "表面微烙金黃烤紋，中心滾燙透明、高湯甘甜多汁"
       ]
     ],
-    "physics": "以黑糯米（紫米）、白糯米與天然海苔粉凝膠蒸製。黑米外皮富含花青素與膳食纖維，常溫下支鏈澱粉容易回生老化變硬；中火慢烤使澱粉再度完全糊化軟化，外皮在炭火直烤下脫水形成酥脆薄殼，裹上花生粉達到絕妙平衡。",
-    "pitfall": "【地雷】大火急烤導致外層炭化而內部依然冰冷硬米粒；【預防】先微火慢烤使整支軟透，再刷醬撒花生粉香菜。"
+    "physics": "白蘿蔔含水量超過 95%，細胞壁由果膠質與纖維素構成。高湯預煮使其果膠質水解軟化，芥子油苷辛辣味完全揮發，細胞間隙充分吸納昆布麩胺酸；上烤架微炙後，表面形成超薄焦香保護層，鎖住內部豐沛甘甜高湯。",
+    "pitfall": "不可去皮過薄或未經高湯預煨直接乾烤，外層纖維會急速失水木質化呈嚼不爛的乾柴皮囊。"
   },
   {
     "id": 45,
-    "name": "金鑽鳳梨厚片 Golden Diamond Pineapple Slice",
-    "category": "fruit",
-    "categoryName": "鮮甜果物",
-    "badgeClass": "badge-forest",
-    "highlight": "酵素失活與果糖焦糖化",
+    "name": "香草蜜烤胡蘿蔔 Herb Honey-Roasted Carrot",
+    "category": "starch",
+    "categoryName": "根莖類",
+    "badgeClass": "badge-gold",
+    "highlight": "果膠水解蔗糖濃縮",
     "specs": [
       [
-        "最佳厚度規格",
-        "去皮去心，切成 15-20mm 扇形厚片"
+        "最佳厚度/規格",
+        "小型水果胡蘿蔔整根或縱切對半（厚度 10-12mm）"
       ],
       [
-        "油脂阻水膜/前處理",
-        "表面均勻撒微量肉桂粉海鹽，免刷油"
+        "表面處理/預處理",
+        "滾拌初榨橄欖油、海鹽與新鮮迷迭香碎"
       ],
       [
         "適烤溫區",
-        "大火直火區 (190-210°C)"
+        "中火區 (150-170°C)"
       ],
       [
         "翻面/出爐標誌",
-        "兩面烙出深褐色焦糖橫紋、果香爆發"
+        "表皮起微皺褶、焦糖化深金黃斑紋、糖蜜香四溢"
       ]
     ],
-    "physics": "生鳳梨富含鳳梨蛋白酶（Bromelain），食用時常有咬舌感。當加熱超過 65°C 時，蛋白酶完全熱變性失活；大火直烤使表面豐富的果糖、葡萄糖迅速焦糖化，高溫揮發酸味物質，甜度集中爆發，多汁溫潤不咬舌。",
-    "pitfall": "【地雷】切太薄導致果汁流失殆盡變成乾癟薄片；【預防】厚切 1.5-2cm，大火短時間（每面 90 秒）烙上焦痕即可。"
+    "physics": "水果胡蘿蔔富含果膠、蔗糖與脂溶性 β-胡蘿蔔素。在 150-170°C 溫火烘烤下，細胞壁果膠質水解變軟，內部水分蒸發使天然蔗糖高度濃縮焦糖化；橄欖油分子高效率溶解萃取胡蘿蔔素，轉化為溫潤甘甜的天然糖蜜風味。",
+    "pitfall": "直火強烤會使胡蘿蔔表皮迅速炭化發苦，而內部硬心無法軟化；須善用中慢火緩慢催熟。"
   },
   {
     "id": 46,
-    "name": "純素日式烤麻糬 Vegan Japanese Mochi",
-    "category": "dessert",
-    "categoryName": "療癒甜點",
-    "badgeClass": "badge-dark",
-    "highlight": "糯米膠原微爆膨脹熱相變",
+    "name": "有機醬燒牛蒡 Organic Braised Burdock",
+    "category": "starch",
+    "categoryName": "根莖類",
+    "badgeClass": "badge-gold",
+    "highlight": "菊糖高溫轉化甘甜",
     "specs": [
       [
-        "最佳厚度規格",
-        "長方塊 40x30x15 mm，單顆平置"
+        "最佳厚度/規格",
+        "10 - 12 mm 厚斜切長段，以刀背輕拍拍鬆纖維"
       ],
       [
-        "油脂阻水膜/前處理",
-        "烤網抹油，食材保持乾燥勿刷醬"
+        "表面處理/預處理",
+        "醋水汆燙 2 分鐘，醬油、味醂與白胡椒預先微漬入味"
       ],
       [
         "適烤溫區",
-        "微火炭灰區 (130-150°C)"
+        "中火區 (160-180°C)"
       ],
       [
         "翻面/出爐標誌",
-        "表面結硬殼、側面微爆裂膨成圓球"
+        "醬汁收乾呈深褐色微焦、纖維軟中帶韌、香氣濃郁"
       ]
     ],
-    "physics": "純糯米經蒸煮捶打形成的均勻緻密凝膠體。低溫微火烘烤使表皮均勻脫水硬化形成堅固氣密殼，內部殘留水分沸騰產生蒸氣壓，迫使表面最薄弱處微爆裂開並膨脹成中空小球，外脆如餅乾、內牽絲綿軟。",
-    "pitfall": "【地雷】未膨脹前過早刷醬導致表皮軟化無法膨起且黏網；【預防】待完全膨脹金黃後，離火再沾黑糖蜜與黃豆粉。"
+    "physics": "牛蒡含有極高比例的水溶性膳食纖維「菊糖」（Inulin）與木質素。刀背拍鬆可破壞粗纖維壁以利醬汁滲透；高溫烘烤促使菊糖微弱水解為果糖，與醬油胺基酸產生極濃烈的泥土木質梅納香氣，展現深邃的日式炭焙甘醇。",
+    "pitfall": "未經拍鬆或汆燙生烤會使木質素過度乾硬如嚼木柴；直火易使表面醬汁燒焦發苦。"
   },
   {
     "id": 47,
-    "name": "純素無明膠棉花糖 Vegan Gelatin-Free Marshmallow",
-    "category": "dessert",
-    "categoryName": "療癒甜點",
+    "name": "經典純素紫米糕 Classic Vegan Purple Rice Cake",
+    "category": "taiwan-classic",
+    "categoryName": "經典台味",
     "badgeClass": "badge-dark",
-    "highlight": "海藻膠低熔點發泡焦化",
+    "highlight": "支鏈澱粉低溫復熱",
     "specs": [
       [
-        "最佳厚度規格",
-        "單顆串於長竹籤頂端"
+        "最佳厚度/規格",
+        "10 - 12 mm 長方厚片，竹籤串起"
       ],
       [
-        "油脂阻水膜/前處理",
-        "乾燥直接串起，遠離直火火焰"
+        "表面處理/預處理",
+        "表面薄刷黑豆蔭油膏，微火慢烤"
       ],
       [
         "適烤溫區",
-        "純餘熱無火區 (120-140°C，懸空15cm)"
+        "微火弱炭區 (120-140°C)"
       ],
       [
         "翻面/出爐標誌",
-        "外表均勻淺金黃薄脆焦殼、微垂微融"
+        "表面微硬脆皮、內部柔軟有彈性，出爐撒花生粉"
       ]
     ],
-    "physics": "純素棉花糖採用鹿角菜膠（Carrageenan）或大豆蛋白水解物代替傳統動物明膠。其凝膠融點較低（約 45-55°C），懸空勻速旋轉利用熱空氣輻射使外層糖份均勻焦糖化，內部海藻膠微融成滑順奶油狀，入口即化。",
-    "pitfall": "【地雷】直接置於火焰上方，因糖分高會在 3 秒內起火燃燒；【預防】保持懸空 15 公分以上，藉由炭火餘熱快速旋轉上色。"
+    "physics": "紫米含有極高比例的支鏈澱粉與花青素。低溫微火讓冷卻老化的澱粉分子重新吸熱糊化回軟（Retrogradation Reversal），黑豆蔭油膏在高溫下焦糖化包裹外層，外脆內Q糯。",
+    "pitfall": "大火急烤會使表面硬化炭化而內部依然冰冷堅硬；務必以微火慢烤至透心。"
   },
   {
     "id": 48,
-    "name": "肉桂巧克力烤香蕉 Cinnamon Choco-Banana",
-    "category": "dessert",
-    "categoryName": "療癒甜點",
+    "name": "澎湖絲瓜草菇盅 Penghu Luffa & Straw Mushroom Cup",
+    "category": "taiwan-classic",
+    "categoryName": "經典台味",
     "badgeClass": "badge-dark",
-    "highlight": "可可脂融點與果糖糊化",
+    "highlight": "鋁箔密封原湯熱對流",
     "specs": [
       [
-        "最佳厚度規格",
-        "整根熟成帶斑香蕉，保留香蕉皮"
+        "最佳厚度/規格",
+        "澎湖絲瓜切 20mm 厚輪片，中央微挖淺槽置入草菇"
       ],
       [
-        "油脂阻水膜/前處理",
-        "內弧面縱切填75%純素黑可可肉桂粉"
+        "表面處理/預處理",
+        "置於小型鋁箔盒中，滴少許薑汁、冷壓芝麻油與海鹽，封口"
       ],
       [
         "適烤溫區",
-        "中微火區 (150-170°C)"
+        "中火區 (160-180°C)"
       ],
       [
         "翻面/出爐標誌",
-        "香蕉皮全黑、巧克力完全融化如熔岩"
+        "鋁箔包澎起散發清甜蒸氣，絲瓜翠綠軟透、蓄滿原汁高湯"
       ]
     ],
-    "physics": "香蕉皮厚實富含果膠與纖維素，形成天然隔熱密封鍋。在 100°C 燜烤下香蕉澱粉徹底水解為果糖與葡萄糖；純素黑巧克力中的可可脂（融點約 34°C）完全乳化液化，與溫熱香蕉果醬融為一體，散發極致濃郁的法式熱熔岩甜點香。",
-    "pitfall": "【地雷】縱切時切斷底層香蕉皮，導致可可脂融化後漏光；【預防】僅切透上方果肉，底部外皮維持完整，並以雙層鋁箔紙密封。"
+    "physics": "澎湖絲瓜（十角絲瓜）肉質緊實耐煮不易黑，草菇富含游離核苷酸。鋁箔盒封閉系統形成 100°C 飽和水蒸氣循環，絲瓜自體釋放大量多醣水分，與草菇鳥苷酸產生頂級鮮味相乘，湯汁清甜無比。",
+    "pitfall": "切忌直接將絲瓜放在鐵網上直火炙烤，水分急劇蒸發且多酚氧化迅速發黑焦苦。"
   },
   {
     "id": 49,
-    "name": "炭烤純素厚片吐司 Charcoal-Grilled Vegan Thick Toast",
-    "category": "taiwan-classic",
-    "categoryName": "台味經典",
-    "badgeClass": "badge-gold",
-    "highlight": "麵包皮梅納反應保水",
+    "name": "雙色水果玉米 Bicolor Sweet Corn",
+    "category": "fruit",
+    "categoryName": "果物",
+    "badgeClass": "badge-forest",
+    "highlight": "高果糖高溫梅納",
     "specs": [
       [
-        "最佳厚度規格",
-        "厚度 25 - 30 mm 純素厚片吐司"
+        "最佳厚度/規格",
+        "整穗帶內層 2-3 片苞葉，或切 30mm 厚輪段"
       ],
       [
-        "油脂阻水膜/前處理",
-        "單面或雙面薄刷純素植物奶油/椰子油"
+        "表面處理/預處理",
+        "浸水 10 分鐘，帶苞葉直接上烤網"
       ],
       [
         "適烤溫區",
-        "微火餘熱區 (140-160°C)"
+        "中火區 (160-170°C)"
       ],
       [
         "翻面/出爐標誌",
-        "表面金黃酥脆微烙痕、按壓外脆內軟"
+        "外苞葉焦黑炭化，剝開後玉米粒金黃飽滿、溢出焦糖香"
       ]
     ],
-    "physics": "吐司麵包心部含有約 35-40% 結合水。微火快速烘烤使表面麵粉澱粉與微量還原糖在 140°C 引發梅納反應與焦糖化，形成金黃薄脆外層；由於厚度達 2.5cm 以上，中心水分子受熱蒸發受阻，形成「外層極致酥脆、內層如雲朵般柔軟濕潤」的頂級口感。",
-    "pitfall": "【地雷】置於大火直烤區，因麵包孔隙多導熱極快，5 秒即焦黑；【預防】炭火微熄時放於烤網邊緣，頻繁翻面 2-3 次即可。"
+    "physics": "水果玉米胚乳富含游離蔗糖與水溶性多醣，含水量達 75%。內苞葉形成微蒸氣室防止水分逸散；蒸熟後剝除外葉薄刷素烤醬微炙，果糖在 160°C 下產生誘人金黃焦糖化與梅納香氣。",
+    "pitfall": "生玉米直接脫葉強火直烤會使外皮迅速脫水乾癟皺縮如爆米花，口感堅硬無汁。"
   },
   {
     "id": 50,
-    "name": "糖蜜溫潤烤橘子 Warm Candied Grilled Tangerine",
-    "category": "fruit",
-    "categoryName": "鮮甜果物",
-    "badgeClass": "badge-forest",
-    "highlight": "橙皮苷揮發果酸圓潤",
+    "name": "純素日式烤麻糬 Vegan Japanese Mochi",
+    "category": "dessert",
+    "categoryName": "甜點",
+    "badgeClass": "badge-gold",
+    "highlight": "水蒸氣微孔澎化",
     "specs": [
       [
-        "最佳厚度規格",
-        "整顆帶皮椪柑或茂谷柑"
+        "最佳厚度/規格",
+        "標準切餅規格（約 15mm 厚矩形切塊）"
       ],
       [
-        "油脂阻水膜/前處理",
-        "外皮洗淨擦乾，蒂頭挖洞撒海鹽包鋁箔"
+        "表面處理/預處理",
+        "烤網薄刷油防沾，放置於細目烤網上"
       ],
       [
         "適烤溫區",
-        "微火炭灰餘熱區 (130-150°C)"
+        "微火低溫區 (100-120°C)"
       ],
       [
         "翻面/出爐標誌",
-        "鋁箔散發柑橘精油香、橘身發熱軟化"
+        "每 30 秒頻繁翻面，表面微金黃且中央鼓起圓球（Puffing）"
       ]
     ],
-    "physics": "柑橘果皮油胞富含檸檬烯與橙皮苷（Hesperidin）。溫熱烘烤使果皮精油分子活化揮發並部分滲入果肉；果肉中的檸檬酸高溫受熱轉化降解，酸感銳度降低，果糖與蔗糖在高溫下更加圓潤甘甜，溫熱多汁且具有潤喉生津之傳統養生食療功效。",
-    "pitfall": "【地雷】未包鋁箔直火烈烤使外皮炭化發苦發臭；【預防】包單層鋁箔紙置於爐邊炭灰中溫火慢烘 10-15 分鐘。"
+    "physics": "日式麻糬由 100% 糯米支鏈澱粉構成。受熱時內部微量水分轉化為過熱蒸氣，在軟化黏彈的澱粉凝膠網絡中膨脹產生微孔澎化（Puffing）；起鍋後外皮形成如威化餅般的薄脆殼，內部則綿密拉絲。",
+    "pitfall": "切忌停留在強火區或久置不翻面，極易瞬間焦黑且外皮破裂塌陷失去蓬鬆感。"
   }
 ];
 
