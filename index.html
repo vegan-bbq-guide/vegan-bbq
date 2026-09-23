@@ -571,45 +571,48 @@
       color: var(--charcoal-black);
     }
     .ingredient-specs {
-  background: var(--parchment-cream);
+  background: #ffffff;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 6px;
+  padding: 4px;
   margin: 10px 0 14px;
 }
 .spec-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 5px 8px;
+  gap: 12px;
+  padding: 6px 10px;
   border-radius: 4px;
+  margin-bottom: 2px;
   border-bottom: none !important;
 }
-/* 奇偶交替斑馬紋底色，強化閱讀對比 */
+/* 高對比斑馬紋底色：清晰區分奇偶行次 */
 .spec-item:nth-child(odd) {
-  background: rgba(28, 56, 43, 0.04);
+  background: #ede6da; /* 溫暖顯著的燕麥深米色 */
+  border-left: 3px solid var(--caramel-wood);
 }
 .spec-item:nth-child(even) {
-  background: transparent;
+  background: #ffffff; /* 純白色 */
+  border-left: 3px solid transparent;
 }
 .spec-label {
   white-space: nowrap !important;
   flex-shrink: 0 !important;
-  color: var(--charcoal-sub);
-  font-weight: 600;
-  font-size: 0.82rem;
+  color: var(--charcoal-black);
+  font-weight: 700;
+  font-size: 0.84rem;
   letter-spacing: 0.02em;
 }
 .spec-val {
   font-weight: 700;
   color: var(--primary-forest);
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   text-align: right;
   word-break: break-word;
 }
-    .ingredient-physics {
+        .ingredient-physics {
       font-size: 0.92rem;
       color: var(--charcoal-sub);
       line-height: 1.7;
@@ -861,7 +864,7 @@
     }
 
     /* ==========================================================================
-       9. 模組 4：金牌串烤風味搭配指南（黃金組合 5 組 + 甜點專區）
+       9. 模組 4：金牌串烤風味搭配指南（黃金組合 10 組 + 甜點專區）
        ========================================================================== */
     .skewer-grid {
       display: grid;
@@ -1290,7 +1293,7 @@
         揚棄傳統純素燒烤「乾、扁、焦、不入味」之刻板印象。本書由資深蔬食研發主廚與烹飪熱力學視角共同編纂，
         融匯「優活健康網」低鈉抗氧化營養指引與「找蔬食 Start Vegan」野炊實戰經驗，
         解析高保水植物組織、幾丁質蕈傘保水層、長鏈菌絲鎖水力、紫米糕支鏈澱粉回軟機制與文旦鮮柚果膠低卡調味，
-        收錄 50 項專業備料清單、50 款食材科學解析、10 款無五辛經典名醬、5 組金牌串烤矩陣與炭火尾韻甜點專區。
+        收錄 50 項專業備料清單、50 款食材科學解析、10 款無五辛經典名醬、10 組金牌串烤矩陣與炭火尾韻甜點專區。
       </p>
 
       <div class="hero-action-row no-print">
@@ -1326,7 +1329,7 @@
       <a href="#module-heat-guide" class="nav-pill"><i class="fa-solid fa-fire-flame-curved"></i> 三區火候與救援</a>
 
       <div class="nav-checklist-indicator" onclick="document.getElementById('prep-checklist').scrollIntoView({behavior:'smooth'})">
-        <i class="fa-solid fa-check-double"></i> 備料進度：<span id="navCheckCount">0/52</span>
+        <i class="fa-solid fa-check-double"></i> 備料進度：<span id="navCheckCount">0/50</span>
       </div>
     </div>
   </nav>
@@ -1341,11 +1344,11 @@
         <div class="checklist-header">
           <div class="checklist-title">
             <i class="fa-solid fa-clipboard-list" style="color: var(--caramel-wood);"></i>
-            <h3>素烤必備食材與特調配方互動備料清單（全 52 項）</h3>
+            <h3>素烤必備食材與特調配方互動備料清單（全 50 項）</h3>
           </div>
           <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
             <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-forest);">
-              已勾選 <span id="checkSummary">0</span> / 52 項 (<span id="checkPercent">0%</span>)
+              已勾選 <span id="checkSummary">0</span> / 50 項 (<span id="checkPercent">0%</span>)
             </div>
             <div class="checklist-progress-wrap">
               <div class="checklist-progress-bar" id="progressBar"></div>
@@ -1407,8 +1410,6 @@
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素日式烤麻糬 (微火慢烤膨脹圓球)</span><span class="check-category-tag tag-dessert">[甜點]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">純素無明膠棉花糖 (懸空餘熱慢轉焦糖化)</span><span class="check-category-tag tag-dessert">[甜點]</span></label>
           <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">肉桂巧克力烤香蕉 (帶皮填純素黑可可)</span><span class="check-category-tag tag-dessert">[甜點]</span></label>
-                  <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">鮮採九層塔 (豆包夾心或掠火激發)</span><span class="check-category-tag tag-veg">[香草]</span></label>
-          <label class="check-item"><input type="checkbox" onchange="handleCheck(this)"><span class="check-text">新鮮甜羅勒 (出爐手撕低溫後置)</span><span class="check-category-tag tag-veg">[香草]</span></label>
         </div>
       </div>
     </section>
@@ -2871,7 +2872,7 @@
     </section>
 
     <!-- ==========================================================================
-         模組 4：金牌串烤風味搭配指南（黃金組合 5 組 + 炭火尾韻純素甜點專區）
+         模組 4：金牌串烤風味搭配指南（黃金組合 10 組 + 炭火尾韻純素甜點專區）
          ========================================================================== -->
     <section id="module-skewers" class="module-section" style="scroll-margin-top: 60px;">
       <div class="section-title-wrap">
@@ -3053,6 +3054,161 @@
           </div>
         </div>
 
+        <!-- 組合 F【歐陸黑椒蕈木串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 F</span>
+            <span class="badge badge-forest" style="background:#4a2c35; color:#fff;"><i class="fa-solid fa-wine-glass"></i> 歐陸黑椒蕈木串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              原木波特菇 × 馬鈴薯厚塊 × 翠綠青椒
+            </h3>
+            <div class="skewer-sequence">
+              <span class="skewer-node">翠綠青椒 (3.5cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">馬鈴薯厚塊 (預蒸)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">波特菇 (厚塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">馬鈴薯厚塊 (預蒸)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">翠綠青椒 (3.5cm)</span>
+            </div>
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>10 號 義大利陳釀紅酒醋黑椒油醋醬<br>
+              <strong>受熱速率一致性設計：</strong>馬鈴薯預蒸八分熟使澱粉預糊化，與吸熱快的波特菇升溫曲線同步；青椒包夾兩側提供脆甜果酸緩衝，紅酒醋受熱縮汁成果木酸甘外殼，粗黑胡椒粒受熱爆裂出濃郁辛香。
+            </div>
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>青椒爽脆多汁 → 馬鈴薯金黃外皮酥香心部鬆軟 → 波特菇如牛排般厚實多汁原湯迸發。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 G【台味炭香千層串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 G</span>
+            <span class="badge badge-gold" style="background:#b23a22; color:#fff;"><i class="fa-solid fa-fire"></i> 台味炭香千層串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              古法麵腸 × 肥厚生香菇 × 玉米筍段
+            </h3>
+            <div class="skewer-sequence">
+              <span class="skewer-node">玉米筍 (3cm)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">古法麵腸 (拉花塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">生香菇 (厚塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">古法麵腸 (拉花塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">玉米筍 (3cm)</span>
+            </div>
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>06 號 台式經典炭烤素沙茶甘醇醬（起鍋前撒主題 05 十三香椒鹽）<br>
+              <strong>受熱速率一致性設計：</strong>麵腸螺旋拉花切紋大幅提高受熱面積，高溫迅速脫水拉絲酥脆；玉米筍硬質管狀支撐籤身防止旋轉，香菇鳥苷酸與沙茶紫菜多醣產生濃烈鮮味加乘。
+            </div>
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>玉米筍清脆清甜 → 麵腸外酥內韌千層嚼勁 → 香菇原汁滾燙鮮美。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 H【秋旬粉潤甘露串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 H</span>
+            <span class="badge badge-forest"><i class="fa-solid fa-seedling"></i> 秋旬粉潤甘露串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              大甲芋頭排 × 三角油豆腐 × 鮮脆綠蘆筍
+            </h3>
+            <div class="skewer-sequence">
+              <span class="skewer-node">綠蘆筍 (段)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">大甲芋頭 (預蒸塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">三角油豆腐 (厚塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">大甲芋頭 (預蒸塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">綠蘆筍 (段)</span>
+            </div>
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>01 號 日式甘口昆布甘露照燒醬（離火撒七味唐辛子）<br>
+              <strong>受熱速率一致性設計：</strong>大甲芋頭預先蒸熟去生，油豆腐孔隙吸飽照燒高湯；中火微炙促使芋頭表面游離糖產生薄脆焦香殼，綠蘆筍以爽脆水分化解澱粉與油豆腐的厚重感。
+            </div>
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>蘆筍極致脆嫩 → 芋頭綿密粉潤散發自然芋香 → 油豆腐外酥內軟湯汁爆發。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 I【和風高湯多汁串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 I</span>
+            <span class="badge badge-forest" style="background:#2b5e4e; color:#fff;"><i class="fa-solid fa-water"></i> 和風高湯多汁串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              關東高湯白蘿蔔 × 凍豆腐 × 娃娃菜段
+            </h3>
+            <div class="skewer-sequence">
+              <span class="skewer-node">娃娃菜 (厚梗段)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">非基改凍豆腐</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">高湯白蘿蔔 (厚輪)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">非基改凍豆腐</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">娃娃菜 (厚梗段)</span>
+            </div>
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>09 號 中秋文旦鮮柚甘露薄鹽醬<br>
+              <strong>受熱速率一致性設計：</strong>白蘿蔔已預煨昆布高湯透心，凍豆腐蜂巢孔洞鎖住原湯；在微弱火區慢烤烙印微焦烤痕，文旦柚果膠薄膜鎖住多汁水分，甘露醇與天然酵素完美交融。
+            </div>
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>娃娃菜清甜爽口 → 凍豆腐如海綿般吸飽鮮美湯汁 → 白蘿蔔入口即化、滾燙高湯原汁四溢。
+            </div>
+          </div>
+        </div>
+
+        <!-- 組合 J【果木煙燻焦糖串】 -->
+        <div class="skewer-card">
+          <div class="skewer-badge-bar">
+            <span class="badge badge-dark">黃金組合 J</span>
+            <span class="badge badge-gold" style="background:#8c532b; color:#fff;"><i class="fa-solid fa-apple-whole"></i> 果木煙燻焦糖串</span>
+          </div>
+          <div class="skewer-body">
+            <h3 style="font-size: 1.25rem; color: var(--charcoal-black);">
+              蜜烤蘋果 × 水果胡蘿蔔 × 純生豆包
+            </h3>
+            <div class="skewer-sequence">
+              <span class="skewer-node">胡蘿蔔 (厚輪)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">純生豆包 (摺疊塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">蜜烤蘋果 (帶皮塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">純生豆包 (摺疊塊)</span>
+              <span class="skewer-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+              <span class="skewer-node">胡蘿蔔 (厚輪)</span>
+            </div>
+            <div class="sci-box">
+              <strong><i class="fa-solid fa-bullseye"></i> 標配刷醬：</strong>02 號 美式經典煙燻黑糖番茄 BBQ 醬（刷覆前撒微量天然肉桂粉）<br>
+              <strong>受熱速率一致性設計：</strong>蘋果原果膠在 80°C 水解軟化釋放果糖，胡蘿蔔天然蔗糖高溫焦糖化；兩側豆包吸收果膠與番茄有機酸，高溫形成多層酥脆薄膜，酸甜解膩、煙燻果香撲鼻。
+            </div>
+            <div style="font-size: 0.88rem; color: var(--charcoal-sub);">
+              <strong>口感層次：</strong>胡蘿蔔溫潤甜糯 → 生豆包卡滋千層酥脆 → 蘋果熱熱爆汁如法式熱蘋果派般甜潤。
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- 炭火尾韻純素甜品專區【新增】 -->
@@ -3221,7 +3377,7 @@
           <li><i class="fa-solid fa-angle-right"></i> <a href="#broccoli-special" style="color:inherit; text-decoration:none;">青花菜平切防褐化專題</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#module-sauces" style="color:inherit; text-decoration:none;">十大無五辛自調素烤醬</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#module-spices" style="color:inherit; text-decoration:none;">16款酸香料熱力學大典</a></li>
-          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-skewers" style="color:inherit; text-decoration:none;">五大金牌串烤黃金矩陣</a></li>
+          <li><i class="fa-solid fa-angle-right"></i> <a href="#module-skewers" style="color:inherit; text-decoration:none;">十大金牌串烤黃金矩陣</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#dessert-section" style="color:inherit; text-decoration:none;">炭火尾韻純素甜點專區</a></li>
           <li><i class="fa-solid fa-angle-right"></i> <a href="#module-heat-guide" style="color:inherit; text-decoration:none;">三區炭火架構與救援指南</a></li>
         </ul>
